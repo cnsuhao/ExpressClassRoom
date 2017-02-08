@@ -78,12 +78,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConfigFile\ConfigFile.cpp" />
+    <ClCompile Include="HttpRequst\HttpRequest.cpp" />
     <ClCompile Include="Login\LoginWnd.cpp" />
+    <ClCompile Include="sqlite3\db.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConfigFile\ConfigFile.h" />
     <ClInclude Include="expresshead.h" />
+    <ClInclude Include="HttpRequst\HttpRequest.h" />
     <ClInclude Include="Login\LoginWnd.h" />
+    <ClInclude Include="sqlite3\db.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

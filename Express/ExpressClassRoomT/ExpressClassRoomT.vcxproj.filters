@@ -12,6 +12,15 @@
     <Filter Include="Login">
       <UniqueIdentifier>{ae6a65fa-d2e2-4bc8-afed-6f4f59521345}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HttpRequst">
+      <UniqueIdentifier>{dca7a8d2-1413-450f-a100-5ad254d30e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ConfigFile">
+      <UniqueIdentifier>{cda0c1ec-d5b4-4ec8-831a-099e3176e66c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sqlite3">
+      <UniqueIdentifier>{6d344380-2ee9-413e-a9dc-ccbedb439b62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -20,6 +29,15 @@
     <ClCompile Include="Login\LoginWnd.cpp">
       <Filter>Login</Filter>
     </ClCompile>
+    <ClCompile Include="HttpRequst\HttpRequest.cpp">
+      <Filter>HttpRequst</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigFile\ConfigFile.cpp">
+      <Filter>ConfigFile</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite3\db.cpp">
+      <Filter>Sqlite3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Login\LoginWnd.h">
@@ -27,6 +45,15 @@
     </ClInclude>
     <ClInclude Include="expresshead.h">
       <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HttpRequst\HttpRequest.h">
+      <Filter>HttpRequst</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigFile\ConfigFile.h">
+      <Filter>ConfigFile</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite3\db.h">
+      <Filter>Sqlite3</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

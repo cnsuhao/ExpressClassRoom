@@ -18,15 +18,15 @@
             <VerticalLayout name="Tab1" float="false" bkcolor="#FFFFFFFF">
                 <HorizontalLayout name="IPHor" bordersize="0" float="false" width="446" height="50">
                     <Label text="云平台IP：" bordersize="0" float="true" pos="0,10,0,0" width="100" height="30" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" font="2" align="right" />
-                    <Edit float="true" pos="115,10,0,0" width="280" height="30" bkcolor="#FFFFFFFF"  bordersize="1" bordercolor="#FF808080" textpadding="4,3,4,3" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" />
+                    <Edit name="ip" float="true" pos="115,10,0,0" width="280" height="30" bkcolor="#FFFFFFFF"  bordersize="1" bordercolor="#FF808080" textpadding="4,3,4,3" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" />
                 </HorizontalLayout>
                 <HorizontalLayout name="AccountHor" bordersize="0" float="false" height="50">
                     <Label text="账号：" bordersize="0" float="true" pos="0,10,0,0" width="100" height="30" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" font="2" align="right" />
-                    <Edit float="true" pos="115,10,0,0" width="280" height="30" bkcolor="#FFFFFFFF"   bordersize="1" bordercolor="#FF808080" textpadding="4,3,4,3" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" />
+                    <Edit name="user" float="true" pos="115,10,0,0" width="280" height="30" bkcolor="#FFFFFFFF"   bordersize="1" bordercolor="#FF808080" textpadding="4,3,4,3" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" />
                 </HorizontalLayout>
                 <HorizontalLayout name="PasswdHor" bordersize="0" float="false" height="50">
                     <Label text="密码：" bordersize="0" float="true" pos="0,10,0,0" width="100" height="30" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" font="2" align="right" />
-                    <Edit float="true" pos="115,10,0,0" width="280" height="30" bkcolor="#FFFFFFFF"   bordersize="1" bordercolor="#FF808080" textpadding="4,3,4,3" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" />
+                    <Edit name="passwd" float="true" pos="115,10,0,0" width="280" height="30" bkcolor="#FFFFFFFF"   bordersize="1" bordercolor="#FF808080" textpadding="4,3,4,3" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" />
                 </HorizontalLayout>
                 <HorizontalLayout name="OptionHor" bordersize="0" float="false">
                     <Option name="opt_rem" bordersize="0" float="true" pos="115,9,0,0" width="21" height="21" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="opt_unselected.png" selectedimage="opt_selected.png" />
@@ -40,7 +40,7 @@
             </VerticalLayout>
             <VerticalLayout name="Tab2" bordersize="0" float="false" bkcolor="#FFFFFFFF">
                 <HorizontalLayout bordersize="0" float="false">
-                    <Button bordersize="1"  normalimage="loading.gif"float="true" pos="193,64,0,0" width="60" height="60" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                    <Button bordersize="1"  normalimage="default_img.png"float="true" pos="168,39,0,0" width="110" height="110" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
                 </HorizontalLayout>
                 <HorizontalLayout bordersize="0" float="false" height="60">
                     <Button name="btn_cancel" text="取消" bordersize="1" borderround="5,5" float="true" pos="123,10,0,0" width="200" height="40" bkcolor="#FF383838" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="1" align="center" />
