@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <windows.h>
 #include <tchar.h>
+#include <string>
+#include <iostream>
 #include "../Duilib/UIlib.h"
 #ifdef _DEBUG
 #pragma  comment(lib,"../lib/DuiLib_d.lib")
@@ -11,5 +13,9 @@
 #pragma  comment(lib,"../lib/DuiLib.lib")
 #endif
 using namespace DuiLib;
-
+using namespace std;
 #endif
+
+
+#define  STATUS_OK		0
+#define  STATUS_ERROR	100
