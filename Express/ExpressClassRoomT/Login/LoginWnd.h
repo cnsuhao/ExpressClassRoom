@@ -16,6 +16,8 @@ public:
 private:
 	bool is_rem, is_auto;
 	std::string userName, Password;
+	std::string cloudIP, cgi;
+	bool login_error;
 protected:
 	void Notify(TNotifyUI& msg);
 private:

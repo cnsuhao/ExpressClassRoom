@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -67,7 +67,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -81,15 +81,26 @@
     <ClCompile Include="ConfigFile\ConfigFile.cpp" />
     <ClCompile Include="HttpRequst\HttpRequest.cpp" />
     <ClCompile Include="Login\LoginWnd.cpp" />
+    <ClCompile Include="MainView\MainView.cpp" />
     <ClCompile Include="sqlite3\db.cpp" />
+    <ClCompile Include="Video\Video.cpp" />
     <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="xml\tinystr.cpp" />
+    <ClCompile Include="xml\tinyxml.cpp" />
+    <ClCompile Include="xml\tinyxmlerror.cpp" />
+    <ClCompile Include="xml\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConfigFile\ConfigFile.h" />
     <ClInclude Include="expresshead.h" />
     <ClInclude Include="HttpRequst\HttpRequest.h" />
     <ClInclude Include="Login\LoginWnd.h" />
+    <ClInclude Include="MainView\MainView.h" />
     <ClInclude Include="sqlite3\db.h" />
+    <ClInclude Include="Video\LivePlayer.h" />
+    <ClInclude Include="Video\Video.h" />
+    <ClInclude Include="xml\tinystr.h" />
+    <ClInclude Include="xml\tinyxml.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

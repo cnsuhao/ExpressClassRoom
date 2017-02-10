@@ -15,7 +15,3 @@
 using namespace DuiLib;
 using namespace std;
 #endif
-
-
-#define  STATUS_OK		0
-#define  STATUS_ERROR	100

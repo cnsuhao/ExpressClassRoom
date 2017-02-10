@@ -26,7 +26,7 @@
                 </HorizontalLayout>
                 <HorizontalLayout name="PasswdHor" bordersize="0" float="false" height="50">
                     <Label text="密码：" bordersize="0" float="true" pos="0,10,0,0" width="100" height="30" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" font="2" align="right" />
-                    <Edit name="passwd" float="true" pos="115,10,0,0" width="280" height="30" bkcolor="#FFFFFFFF"   bordersize="1" bordercolor="#FF808080" textpadding="4,3,4,3" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" />
+                    <Edit name="passwd" float="true" pos="115,10,0,0" width="280" height="30" bkcolor="#FFFFFFFF"   bordersize="1" bordercolor="#FF808080" textpadding="4,3,4,3" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" password="true" />
                 </HorizontalLayout>
                 <HorizontalLayout name="OptionHor" bordersize="0" float="false">
                     <Option name="opt_rem" bordersize="0" float="true" pos="115,9,0,0" width="21" height="21" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="opt_unselected.png" selectedimage="opt_selected.png" />
@@ -44,6 +44,14 @@
                 </HorizontalLayout>
                 <HorizontalLayout bordersize="0" float="false" height="60">
                     <Button name="btn_cancel" text="取消" bordersize="1" borderround="5,5" float="true" pos="123,10,0,0" width="200" height="40" bkcolor="#FF383838" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="1" align="center" />
+                </HorizontalLayout>
+            </VerticalLayout>
+			<VerticalLayout name="Tab3" bordersize="0" float="false" bkcolor="#FFFFFFFF">
+                <HorizontalLayout bordersize="0" float="false">
+                    <Text name="lab_tip" font="2" bordersize="0" float="true" pos="40,40,0,0" width="366" height="108" textpadding="2,0,2,0" textcolor="#FF383838" disabledtextcolor="#FFA7A6AA" align="centerwrap" />
+                </HorizontalLayout>
+                <HorizontalLayout bordersize="0" float="false" height="60">
+                    <Button name="btn_ok" text="确定" bordersize="1" borderround="5,5" float="true" pos="123,10,0,0" width="200" height="40" bkcolor="#FF383838" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="1" align="center" />
                 </HorizontalLayout>
             </VerticalLayout>
         </TabLayout>
