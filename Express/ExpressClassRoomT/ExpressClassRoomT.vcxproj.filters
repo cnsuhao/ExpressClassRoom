@@ -21,6 +21,15 @@
     <Filter Include="Sqlite3">
       <UniqueIdentifier>{6d344380-2ee9-413e-a9dc-ccbedb439b62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Xml">
+      <UniqueIdentifier>{bb7f3128-c85f-49b7-b1ed-59c60b444068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainView">
+      <UniqueIdentifier>{5cb6ad6b-6e2d-42ac-8e15-9bacea4e22c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Video">
+      <UniqueIdentifier>{861845a3-fdc1-44b2-acda-f49b39d7829f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -38,6 +47,24 @@
     <ClCompile Include="sqlite3\db.cpp">
       <Filter>Sqlite3</Filter>
     </ClCompile>
+    <ClCompile Include="xml\tinyxml.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="xml\tinystr.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="xml\tinyxmlerror.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="xml\tinyxmlparser.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="MainView\MainView.cpp">
+      <Filter>MainView</Filter>
+    </ClCompile>
+    <ClCompile Include="Video\Video.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Login\LoginWnd.h">
@@ -54,6 +81,21 @@
     </ClInclude>
     <ClInclude Include="sqlite3\db.h">
       <Filter>Sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="xml\tinyxml.h">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="xml\tinystr.h">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="MainView\MainView.h">
+      <Filter>MainView</Filter>
+    </ClInclude>
+    <ClInclude Include="Video\Video.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="Video\LivePlayer.h">
+      <Filter>Video</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

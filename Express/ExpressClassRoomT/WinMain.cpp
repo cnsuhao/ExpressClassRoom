@@ -1,5 +1,5 @@
 #include "expresshead.h"
-
+#include "MainView/MainView.h"
 #include "login/LoginWnd.h"
 #include <vld.h>
 
@@ -33,7 +33,14 @@ int  _tWinMain(HINSTANCE hInstance,
 	LoginWnd *login = new LoginWnd();
 	login->Create(NULL, _T("µÇÂ¼"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
 	login->CenterWindow();
-	login->ShowModal();
+	UINT lres=login->ShowModal();
+	if (lres == 1)
+	{
+		MainView *mainview = new MainView();
+		mainview->Create(NULL, _T("mainPage"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+		mainview->CenterWindow();
+		mainview->ShowModal();
+	}
 	::CoUninitialize();
 	return EXIT_SUCCESS;
 
