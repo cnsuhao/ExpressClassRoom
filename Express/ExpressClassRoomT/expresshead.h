@@ -15,3 +15,7 @@
 using namespace DuiLib;
 using namespace std;
 #endif
+
+
+#define  CLOUD_IP_FILE	"login.conf"
+#define  DB_FILE		"user.db"

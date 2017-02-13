@@ -30,6 +30,9 @@
     <Filter Include="Video">
       <UniqueIdentifier>{861845a3-fdc1-44b2-acda-f49b39d7829f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SettingView">
+      <UniqueIdentifier>{63e126a5-f308-4a48-bc63-331f9fac3ee4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -65,6 +68,9 @@
     <ClCompile Include="Video\Video.cpp">
       <Filter>Video</Filter>
     </ClCompile>
+    <ClCompile Include="SettingView\SettingView.cpp">
+      <Filter>SettingView</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Login\LoginWnd.h">
@@ -96,6 +102,9 @@
     </ClInclude>
     <ClInclude Include="Video\LivePlayer.h">
       <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingView\SettingView.h">
+      <Filter>SettingView</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

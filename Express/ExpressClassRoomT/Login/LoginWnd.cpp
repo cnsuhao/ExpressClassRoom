@@ -7,8 +7,6 @@
 #include "../xml/tinyxml.h"
 
 #define  TIMER_ID_LOGIN	1000
-#define  CLOUD_IP_FILE	"login.conf"
-#define  DB_FILE		"user.db"
 
 std::string global_user;
 std::string globale_passwd;
@@ -142,10 +140,14 @@ void LoginWnd::Notify(TNotifyUI& msg)
 				optauto->Selected(false);
 				is_auto = false;
 			}
+		}	
+	}
+	else if (msg.sType == DUI_MSGTYPE_RETURN)
+	{
+		if (msg.pSender->GetName() == _T("user") || msg.pSender->GetName() == _T("passwd"))
+		{
+			StartLogin();
 		}
-		
-
-		
 	}
 }
 
