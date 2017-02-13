@@ -2,11 +2,7 @@
 #include "../expresshead.h"
 #include "LivePlayer.h"
 
-#ifdef _DEBUG
-#pragma comment(lib,"../lib/LivePlayerD.lib")
-#else
 #pragma comment(lib,"../lib/LivePlayer.lib")
-#endif
 class CVideoUI;
 class CVideoWnd :public CWindowWnd
 {
@@ -19,6 +15,8 @@ public:
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 private:
 	CVideoUI*	    m_pOwner;
+	int click_tick;
+	clock_t pre_time, cur_time;
 };
 
 class CVideoUI :public CContainerUI

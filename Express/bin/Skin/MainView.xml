@@ -42,7 +42,7 @@
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false">
                                 <Container bordersize="0" float="false" width="5" />
-                                <VerticalLayout bordersize="0" float="false" bkcolor="#FFFF0000" />
+                                 <Video bordersize="0" float="false" name="video1" />
                                 <Container bordersize="0" float="false" width="5" />
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false" height="5" />
@@ -66,7 +66,7 @@
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false">
                                 <Container bordersize="0" float="false" width="5" />
-                                <VerticalLayout bordersize="0" float="false" bkcolor="#FFFF0000" />
+                                 <Video bordersize="0" float="false" name="video2" />
                                 <Container bordersize="0" float="false" width="5" />
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false" height="5" />
@@ -90,7 +90,7 @@
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false">
                                 <Container bordersize="0" float="false" width="5" />
-                                <VerticalLayout bordersize="0" float="false" bkcolor="#FFFF0000" />
+                                 <Video bordersize="0" float="false" name="video3" />
                                 <Container bordersize="0" float="false" width="5" />
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false" height="5" />
@@ -114,7 +114,7 @@
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false">
                                 <Container bordersize="0" float="false" width="5" />
-                                <VerticalLayout bordersize="0" float="false" bkcolor="#FFFF0000" />
+                                 <Video bordersize="0" float="false" name="video4" />
                                 <Container bordersize="0" float="false" width="5" />
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false" height="5" />
@@ -138,7 +138,7 @@
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false">
                                 <Container bordersize="0" float="false" width="5" />
-                                <VerticalLayout bordersize="0" float="false" bkcolor="#FFFF0000" />
+                                <Video bordersize="0" float="false" name="video5" />
                                 <Container bordersize="0" float="false" width="5" />
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false" height="5" />
@@ -162,7 +162,7 @@
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false">
                                 <Container bordersize="0" float="false" width="5" />
-                                <VerticalLayout bordersize="0" float="false" bkcolor="#FFFF0000" />
+                                 <Video bordersize="0" float="false" name="video6" />
                                 <Container bordersize="0" float="false" width="5" />
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false" height="5" />
@@ -188,7 +188,7 @@
                             <Container bordersize="0" float="false" height="4" />
                             <VerticalLayout bordersize="0" borderround="5,5" float="false" bkcolor="#FF383838">
                                 <HorizontalLayout bordersize="0" float="false" height="45">
-                                    <Button name="school_ico1" bordersize="1" bordercolor="#FF383838"   borderround="23,23" float="false" width="45" height="45" bkimage="ico.jpg" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                                    <Button name="school_ico1" bordersize="0"   borderround="45,45" float="false" width="45" height="45" bkimage="ico.jpg" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
                                     <VerticalLayout bordersize="0" float="false">
                                         <Label name="lab_school_name1" text="秀全中学新校区" bordersize="0" float="false" height="23" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
                                         <Label name="lab_school_ip1" text="192.168.8.74" bordersize="0" float="false" height="22" textcolor="#FF9EA4A9" disabledtextcolor="#FFA7A6AA" align="center" />

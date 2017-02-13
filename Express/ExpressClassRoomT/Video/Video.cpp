@@ -1,9 +1,9 @@
 #include "Video.h"
 
 
-CVideoWnd::CVideoWnd():m_pOwner(NULL)
+CVideoWnd::CVideoWnd() :m_pOwner(NULL), click_tick(0)
 {
-
+	cur_time = pre_time = 0;
 }
 
 
@@ -15,6 +15,7 @@ CVideoUI::~CVideoUI(void)
 {
 	if (MediaPlayer)
 		ILivePlayer::ReleaseInstance(MediaPlayer);
+	delete m_pwindows;
 }
 
 LPCTSTR CVideoWnd::GetWindowClassName() const
@@ -39,6 +40,25 @@ LRESULT CVideoWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	if (uMsg == WM_ERASEBKGND)
 	{
 		PainBk();
+	}
+	else if (uMsg == WM_LBUTTONDOWN)
+	{
+		++click_tick;
+		cur_time = clock();
+		if (cur_time - pre_time > 500)
+		{
+			click_tick = 0;
+		}
+		pre_time = cur_time;
+		if (click_tick >= 1)
+		{
+			m_pOwner->GetManager()->SendNotify(m_pOwner, DUI_MSGTYPE_DBCLICK);
+			click_tick = 0;
+		}
+	}
+	else if (uMsg==WM_RBUTTONDOWN)
+	{
+		OutputDebugStringA("-----------");
 	}
 	return CWindowWnd::HandleMessage(uMsg,wParam,lParam);
 }
@@ -68,8 +88,8 @@ void CVideoWnd::PainBk()
 /**************************************************/
 void CVideoUI::SetVisible(bool bVisible )
 {
+	ShowWindow(getHwnd(), bVisible);
 	__super::SetVisible(bVisible);
-	ShowWindow(getHwnd(),bVisible);
 }
 void CVideoUI::SetPos(RECT rc)
 {
@@ -101,7 +121,7 @@ void CVideoUI::Init()
 		if (getHwnd())
 		{
 			MediaPlayer = ILivePlayer::GetInstance();
-			MediaPlayer->SetHWND(getHwnd());
+			//MediaPlayer->SetHWND(getHwnd());
 		}
 	}	
 }

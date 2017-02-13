@@ -57,6 +57,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>false</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,6 +83,7 @@
     <ClCompile Include="HttpRequst\HttpRequest.cpp" />
     <ClCompile Include="Login\LoginWnd.cpp" />
     <ClCompile Include="MainView\MainView.cpp" />
+    <ClCompile Include="SettingView\SettingView.cpp" />
     <ClCompile Include="sqlite3\db.cpp" />
     <ClCompile Include="Video\Video.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -96,6 +98,7 @@
     <ClInclude Include="HttpRequst\HttpRequest.h" />
     <ClInclude Include="Login\LoginWnd.h" />
     <ClInclude Include="MainView\MainView.h" />
+    <ClInclude Include="SettingView\SettingView.h" />
     <ClInclude Include="sqlite3\db.h" />
     <ClInclude Include="Video\LivePlayer.h" />
     <ClInclude Include="Video\Video.h" />
