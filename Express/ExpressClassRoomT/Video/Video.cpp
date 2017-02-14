@@ -32,7 +32,7 @@ void CVideoWnd::Init(CVideoUI* pOwner)
 	rcpos.right+=rcwnd.left;
 	rcpos.top+=rcwnd.top;
 	rcpos.bottom+=rcwnd.top;
-	Create(m_pOwner->GetManager()->GetPaintWindow(),NULL,WS_CHILD|WS_EX_TOPMOST | ES_AUTOHSCROLL | WS_VISIBLE,0,rcpos);
+	Create(m_pOwner->GetManager()->GetPaintWindow(),NULL,WS_CHILD|WS_EX_TOPMOST  | WS_VISIBLE,0,rcpos);
 	::ShowWindow(m_hWnd,SW_SHOW);
 }
 LRESULT CVideoWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -54,6 +54,13 @@ LRESULT CVideoWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			m_pOwner->GetManager()->SendNotify(m_pOwner, DUI_MSGTYPE_DBCLICK);
 			click_tick = 0;
+		}
+	}
+	else if (uMsg==WM_SIZE)
+	{
+		if (m_pOwner->MediaPlayer)
+		{
+			m_pOwner->MediaPlayer->SetHWND(m_hWnd);
 		}
 	}
 	else if (uMsg==WM_RBUTTONDOWN)
@@ -121,7 +128,6 @@ void CVideoUI::Init()
 		if (getHwnd())
 		{
 			MediaPlayer = ILivePlayer::GetInstance();
-			//MediaPlayer->SetHWND(getHwnd());
 		}
 	}	
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include "../expresshead.h"
-//#include "../ConfigFile/ConfigFile.h"
-
+#include "../ConfigFile/ConfigFile.h"
+#include <vector>
 class SettingView :public WindowImplBase
 {
 public:
@@ -12,6 +12,11 @@ public:
 	CDuiString GetSkinFolder();
 private:
 	void Notify(TNotifyUI& msg);
-	//ConfigFile cfg;
+	void Init();
+	std::string remoteIP[6];
+	CEditUI* remote_edit[6];
+	std::string  localIP;
+	std::string  name;
+	ConfigFile *cfg;
 };
 
