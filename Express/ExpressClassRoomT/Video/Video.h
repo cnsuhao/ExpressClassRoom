@@ -1,8 +1,13 @@
 #pragma once
 #include "../expresshead.h"
 #include "LivePlayer.h"
-
+#ifdef _DEBUG
+#pragma comment(lib,"../lib/LivePlayerD.lib")
+#else
 #pragma comment(lib,"../lib/LivePlayer.lib")
+#endif // DEBUG
+
+
 class CVideoUI;
 class CVideoWnd :public CWindowWnd
 {

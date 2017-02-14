@@ -55,6 +55,17 @@ void MainView::Notify(TNotifyUI& msg)
 		{
 			CVerticalLayoutUI *ver = static_cast<CVerticalLayoutUI*>(m_PaintManager.FindControl(_T("ClassRoomLay")));
 			ver->SetVisible(!ver->IsVisible());
+			msg.pSender->SetVisible(false);
+			CButtonUI *btn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_unexpend")));
+			btn->SetVisible(true);
+		}
+		else if (msg.pSender->GetName() == _T("btn_unexpend"))
+		{
+			CVerticalLayoutUI *ver = static_cast<CVerticalLayoutUI*>(m_PaintManager.FindControl(_T("ClassRoomLay")));
+			ver->SetVisible(!ver->IsVisible());
+			msg.pSender->SetVisible(false);
+			CButtonUI *btn = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_expend")));
+			btn->SetVisible(true);
 		}
 		else if (msg.pSender->GetName()==_T("btn_setting"))
 		{
@@ -78,6 +89,8 @@ void MainView::Notify(TNotifyUI& msg)
 				CVideoUI * video = static_cast<CVideoUI*>(m_PaintManager.FindControl(name));
 				video->SetVisible(hor->IsVisible());
 			}
+			
+			
 		}
 	}
 }
@@ -103,20 +116,27 @@ LRESULT MainView::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		DisplayDateTime();
 	}
+	else if (wParam == 1111)
+	{
+		CVideoUI *video = static_cast<CVideoUI*>(m_PaintManager.FindControl(_T("mainVideo")));
+		video->MediaPlayer->Load("rtmp://192.168.8.237:1935/live/slive");
+		bool res= subVideo[0].video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
+		//subVideo[1].video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
+		//for (int i = 0; i < 6; i++)
+		//{
+			//subVideo[0].video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
+		//}
+		KillTimer(*this, 1111);
+	}
 	return 0;
 }
 void MainView::Init()
 {
+	initSubVideo();
 	lab_date = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_date")));
 	lab_time = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_time")));
-
 	SetTimer(*this, TIME_ID_UPDATE_TIME, 999, NULL);
-
-	CVideoUI *video = static_cast<CVideoUI*>(m_PaintManager.FindControl(_T("video1")));
-	video->MediaPlayer->SetScale(Scale_16_9);
-	//video->MediaPlayer->SetHWND(*this);
-	video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
-	//video->MediaPlayer->Load("F:/test.mov");
+	SetTimer(*this, 1111, 1000, NULL);
 }
 void MainView::DisplayDateTime()
 {
@@ -128,9 +148,39 @@ void MainView::DisplayDateTime()
 	if (lab_date)
 		lab_date->SetText(cdate);
 
-	sprintf(ctime, "%d:%d:%d",st.wHour,st.wMinute,st.wSecond);
+	sprintf(ctime, "%d:%02d:%02d",st.wHour,st.wMinute,st.wSecond);
 
 	if (lab_time)
 		lab_time->SetText(ctime);
 
+}
+
+void MainView::initSubVideo()
+{
+	for (int i = 0; i < 6; i++)
+	{
+		char title_name[20];
+		sprintf(title_name,"lab_title%d",i+1);
+		subVideo[i].lab_title = static_cast<CLabelUI*>(m_PaintManager.FindControl(title_name));
+		char snd_name[20];
+		sprintf(snd_name, "btn_sound%d", i + 1);
+		subVideo[i].btn_sound = static_cast<CButtonUI*>(m_PaintManager.FindControl(snd_name));
+		char video_name[20];
+		sprintf(video_name, "video%d", i + 1);
+		subVideo[i].video = static_cast<CVideoUI*>(m_PaintManager.FindControl(video_name));
+		char teacher_name[20];
+		sprintf(teacher_name,"teacher%d",i+1);
+		subVideo[i].btn_teacher = static_cast<CButtonUI*>(m_PaintManager.FindControl(teacher_name));
+		if (i != 5)
+		{
+			char student_name[20];
+			sprintf(student_name, "student%d", i + 1);
+			subVideo[i].btn_student = static_cast<CButtonUI*>(m_PaintManager.FindControl(student_name));
+		}
+		else
+		{
+			subVideo[i].btn_student = NULL;
+		}
+
+	}
 }
