@@ -7,6 +7,23 @@
 #pragma comment(lib,"../lib/LivePlayer.lib")
 #endif // DEBUG
 
+class Ido
+{
+public:
+	virtual void work()=0;
+};
+
+class tmp_thread
+{
+public:
+	tmp_thread():m_work(NULL){}
+	void setWork(Ido* work);
+	void run();
+	void do_work();
+private:
+	Ido *m_work;
+	HANDLE handle;
+};
 
 class CVideoUI;
 class CVideoWnd :public CWindowWnd
@@ -24,7 +41,7 @@ private:
 	clock_t pre_time, cur_time;
 };
 
-class CVideoUI :public CContainerUI
+class CVideoUI :public CContainerUI ,public Ido
 {
 	friend class CVideoWnd;
 public:
@@ -34,7 +51,16 @@ public:
 	void SetPos(RECT rc);
 	HWND getHwnd();
 	void Init();
-	ILivePlayer *MediaPlayer;
+	bool play(std::string url);
+	void stop();
+	void setScale(enScale eScale = Scale_Full);
+	void setVolume(int volume);
+	void setMute(bool mute=true);
 private:
+	ILivePlayer *MediaPlayer;
 	CVideoWnd *m_pwindows;
+	std::string playurl;
+public:
+	void work();
+
 };

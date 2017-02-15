@@ -308,6 +308,18 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="Thread"
+			>
+			<File
+				RelativePath=".\Thread\CrossThread.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Thread\CrossThread.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

@@ -88,9 +88,52 @@ void MainView::Notify(TNotifyUI& msg)
 				sprintf(name,"video%d",i);
 				CVideoUI * video = static_cast<CVideoUI*>(m_PaintManager.FindControl(name));
 				video->SetVisible(hor->IsVisible());
-			}
-			
-			
+			}	
+		}
+		else if (msg.pSender->GetName() == _T("video1"))
+		{
+			static bool is_play = false;
+			if (!is_play)
+				subVideo[0].video->play("rtmp://192.168.8.236:1935/live/slive");
+			else
+				subVideo[0].video->stop();
+			is_play=!is_play;
+		}
+		else if (msg.pSender->GetName() == _T("video2"))
+		{
+			static bool is_play = false;
+			if (!is_play)
+				subVideo[1].video->play("rtmp://192.168.8.236:1935/live/slive");
+			else
+				subVideo[1].video->stop();
+			is_play=!is_play;
+		}
+		else if (msg.pSender->GetName() == _T("video3"))
+		{
+			static bool is_play = false;
+			if (!is_play)
+				subVideo[2].video->play("rtmp://192.168.8.236:1935/live/slive");
+			else
+				subVideo[2].video->stop();
+			is_play=!is_play;
+		}
+		else if (msg.pSender->GetName() == _T("video4"))
+		{
+			static bool is_play = false;
+			if (!is_play)
+				subVideo[3].video->play("rtmp://192.168.8.236:1935/live/slive");
+			else
+				subVideo[3].video->stop();
+			is_play=!is_play;
+		}
+		else if (msg.pSender->GetName() == _T("video5"))
+		{
+			static bool is_play = false;
+			if (!is_play)
+				subVideo[4].video->play("rtmp://192.168.8.236:1935/live/slive");
+			else
+				subVideo[4].video->stop();
+			is_play=!is_play;
 		}
 	}
 }
@@ -119,13 +162,14 @@ LRESULT MainView::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	else if (wParam == 1111)
 	{
 		CVideoUI *video = static_cast<CVideoUI*>(m_PaintManager.FindControl(_T("mainVideo")));
-		video->MediaPlayer->Load("rtmp://192.168.8.237:1935/live/slive");
-		bool res= subVideo[0].video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
+		video->play("rtmp://192.168.8.237:1935/live/slive");
+		//subVideo[0].video->play("rtmp://192.168.8.236:1935/live/slive");
 		//subVideo[1].video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
-		//for (int i = 0; i < 6; i++)
-		//{
-			//subVideo[0].video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
-		//}
+		/*for (int i = 0; i < 6; i++)
+		{
+			subVideo[i].video->MediaPlayer->SetMute(true);
+			subVideo[i].video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
+		}*/
 		KillTimer(*this, 1111);
 	}
 	return 0;
@@ -136,7 +180,7 @@ void MainView::Init()
 	lab_date = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_date")));
 	lab_time = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_time")));
 	SetTimer(*this, TIME_ID_UPDATE_TIME, 999, NULL);
-	SetTimer(*this, 1111, 1000, NULL);
+	SetTimer(*this, 1111, 500, NULL);
 }
 void MainView::DisplayDateTime()
 {

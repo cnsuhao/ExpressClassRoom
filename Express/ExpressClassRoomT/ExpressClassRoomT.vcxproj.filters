@@ -33,6 +33,9 @@
     <Filter Include="SettingView">
       <UniqueIdentifier>{63e126a5-f308-4a48-bc63-331f9fac3ee4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{6ad54d78-d2ff-4368-8161-366a75f6c51e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -71,6 +74,9 @@
     <ClCompile Include="SettingView\SettingView.cpp">
       <Filter>SettingView</Filter>
     </ClCompile>
+    <ClCompile Include="Thread\CrossThread.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Login\LoginWnd.h">
@@ -105,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="SettingView\SettingView.h">
       <Filter>SettingView</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\CrossThread.h">
+      <Filter>Thread</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

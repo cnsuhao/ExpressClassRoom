@@ -84,13 +84,13 @@ void LoginWnd::Notify(TNotifyUI& msg)
 		}
 		else if (msg.pSender->GetName() == _T("btn_cancel"))
 		{
-			CTabLayoutUI *tab = static_cast<CTabLayoutUI*>(m_PaintManager.FindControl(_T("TabLay")));
+			CAnimationTabLayoutUI *tab = static_cast<CAnimationTabLayoutUI*>(m_PaintManager.FindControl(_T("TabLay")));
 			tab->SelectItem(0);
 			KillTimer(*this, TIMER_ID_LOGIN);
 		}
 		else if (msg.pSender->GetName() == _T("btn_ok"))
 		{
-			CTabLayoutUI *tab = static_cast<CTabLayoutUI*>(m_PaintManager.FindControl(_T("TabLay")));
+			CAnimationTabLayoutUI *tab = static_cast<CAnimationTabLayoutUI*>(m_PaintManager.FindControl(_T("TabLay")));
 			tab->SelectItem(0);
 			KillTimer(*this, TIMER_ID_LOGIN);
 		}
@@ -183,7 +183,7 @@ void LoginWnd::LoadLocalData()
 
 void LoginWnd::StartLogin()
 {
-	CTabLayoutUI *tab = static_cast<CTabLayoutUI*>(m_PaintManager.FindControl(_T("TabLay")));
+	CAnimationTabLayoutUI *tab = static_cast<CAnimationTabLayoutUI*>(m_PaintManager.FindControl(_T("TabLay")));
 	tab->SelectItem(1);
 	SetTimer(*this, TIMER_ID_LOGIN, 3000, NULL);
 	CEditUI* userNameEdit = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("user")));
@@ -270,5 +270,12 @@ LRESULT LoginWnd::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-
+CControlUI* LoginWnd::CreateControl(LPCTSTR pstrClass)
+{
+	if (0 == _tcscmp(pstrClass, _T("AnimationTabLayout")))
+	{
+		return new CAnimationTabLayoutUI;
+	}
+	return __super::CreateControl(pstrClass);
+}
 
