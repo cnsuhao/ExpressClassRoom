@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib", "Duilib\DuiLib.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExpressClassRoomT", "ExpressClassRoomT\ExpressClassRoomT.vcxproj", "{BAE533F7-2DF7-4F2C-BE70-2CA2ABDE6D63}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileDlg", "FileDlg\FileDlg.vcxproj", "{9D3D94BB-6776-4DE2-987E-AC0BBB867055}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,14 @@ Global
 		{BAE533F7-2DF7-4F2C-BE70-2CA2ABDE6D63}.UnicodeDebug|Win32.Build.0 = Debug|Win32
 		{BAE533F7-2DF7-4F2C-BE70-2CA2ABDE6D63}.UnicodeRelease|Win32.ActiveCfg = Release|Win32
 		{BAE533F7-2DF7-4F2C-BE70-2CA2ABDE6D63}.UnicodeRelease|Win32.Build.0 = Release|Win32
+		{9D3D94BB-6776-4DE2-987E-AC0BBB867055}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9D3D94BB-6776-4DE2-987E-AC0BBB867055}.Debug|Win32.Build.0 = Debug|Win32
+		{9D3D94BB-6776-4DE2-987E-AC0BBB867055}.Release|Win32.ActiveCfg = Release|Win32
+		{9D3D94BB-6776-4DE2-987E-AC0BBB867055}.Release|Win32.Build.0 = Release|Win32
+		{9D3D94BB-6776-4DE2-987E-AC0BBB867055}.UnicodeDebug|Win32.ActiveCfg = Debug|Win32
+		{9D3D94BB-6776-4DE2-987E-AC0BBB867055}.UnicodeDebug|Win32.Build.0 = Debug|Win32
+		{9D3D94BB-6776-4DE2-987E-AC0BBB867055}.UnicodeRelease|Win32.ActiveCfg = Release|Win32
+		{9D3D94BB-6776-4DE2-987E-AC0BBB867055}.UnicodeRelease|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

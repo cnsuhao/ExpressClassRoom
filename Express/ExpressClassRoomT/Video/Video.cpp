@@ -1,5 +1,34 @@
 #include "Video.h"
 
+ unsigned int __stdcall proc(void* param)
+{
+	tmp_thread* th = (tmp_thread*)param;
+	if (th)
+		th->do_work();
+	return 0;
+}
+void tmp_thread::run()
+{
+	unsigned int threadaddr;
+	handle = (HANDLE)_beginthreadex(NULL, 0, proc, this, 0, &threadaddr);
+	if (!handle)
+	{
+		CloseHandle(handle);
+		handle = NULL;
+	}
+
+}
+
+void tmp_thread::setWork(Ido* work)
+{
+	m_work = work;
+}
+
+void tmp_thread::do_work()
+{
+	if (m_work)
+		m_work->work();
+}
 
 CVideoWnd::CVideoWnd() :m_pOwner(NULL), click_tick(0)
 {
@@ -70,6 +99,8 @@ LRESULT CVideoWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return CWindowWnd::HandleMessage(uMsg,wParam,lParam);
 }
 
+
+
 RECT CVideoWnd::CalPos()
 {
 	return m_pOwner->GetPos();
@@ -130,4 +161,51 @@ void CVideoUI::Init()
 			MediaPlayer = ILivePlayer::GetInstance();
 		}
 	}	
+}
+
+bool CVideoUI::play(std::string url)
+{
+	playurl = url;
+	tmp_thread th;
+	th.setWork(this);
+	if (MediaPlayer)
+	{
+		th.run();
+		return true;
+	}
+	else
+		return false;
+}
+void CVideoUI::work()
+{
+	if (MediaPlayer)
+	{
+		MediaPlayer->SetMute(true);
+		static CRITICAL_SECTION sec;
+		InitializeCriticalSection(&sec);
+		EnterCriticalSection(&sec);
+		MediaPlayer->Load(playurl);
+		LeaveCriticalSection(&sec);
+		DeleteCriticalSection(&sec);
+	}		
+}
+void CVideoUI::stop()
+{
+	if (MediaPlayer)
+		MediaPlayer->Stop();
+}
+void CVideoUI::setScale(enScale eScale)
+{
+	if (MediaPlayer)
+		MediaPlayer->SetScale(eScale);
+}
+void CVideoUI::setVolume(int volume)
+{
+	if (MediaPlayer)
+		MediaPlayer->SetVolume(volume);
+}
+void CVideoUI::setMute(bool mute)
+{
+	if (MediaPlayer)
+		MediaPlayer->SetMute(mute);
 }

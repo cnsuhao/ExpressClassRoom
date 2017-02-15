@@ -14,7 +14,7 @@
                 <Container bordersize="0" float="false" width="10" />
             </HorizontalLayout>
         </VerticalLayout>
-        <TabLayout name="TabLay" bordersize="2" bordercolor="#FF656565" float="false">
+        <AnimationTabLayout name="TabLay" bordersize="2" bordercolor="#FF656565" float="false" animation_direction="horizontal" >
             <VerticalLayout name="Tab1" float="false" bkcolor="#FFFFFFFF">
                 <HorizontalLayout name="IPHor" bordersize="0" float="false" width="446" height="50">
                     <Label text="云平台IP：" bordersize="0" float="true" pos="0,10,0,0" width="100" height="30" textcolor="#FF656565" disabledtextcolor="#FFA7A6AA" font="2" align="right" />
@@ -54,6 +54,6 @@
                     <Button name="btn_ok" text="确定" bordersize="1" borderround="5,5" float="true" pos="123,10,0,0" width="200" height="40" bkcolor="#FF383838" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="1" align="center" />
                 </HorizontalLayout>
             </VerticalLayout>
-        </TabLayout>
+        </AnimationTabLayout>
     </VerticalLayout>
 </Window>

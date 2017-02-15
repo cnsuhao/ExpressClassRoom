@@ -13,6 +13,7 @@ public:
 	CDuiString GetSkinFolder();
 	LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 	LRESULT OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	CControlUI* CreateControl(LPCTSTR pstrClass);
 private:
 	bool is_rem, is_auto;
 	std::string userName, Password;
