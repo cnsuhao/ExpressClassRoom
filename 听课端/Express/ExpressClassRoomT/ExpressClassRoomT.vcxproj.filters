@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Login">
+      <UniqueIdentifier>{ae6a65fa-d2e2-4bc8-afed-6f4f59521345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HttpRequst">
+      <UniqueIdentifier>{dca7a8d2-1413-450f-a100-5ad254d30e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ConfigFile">
+      <UniqueIdentifier>{cda0c1ec-d5b4-4ec8-831a-099e3176e66c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sqlite3">
+      <UniqueIdentifier>{6d344380-2ee9-413e-a9dc-ccbedb439b62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml">
+      <UniqueIdentifier>{bb7f3128-c85f-49b7-b1ed-59c60b444068}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainView">
+      <UniqueIdentifier>{5cb6ad6b-6e2d-42ac-8e15-9bacea4e22c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Video">
+      <UniqueIdentifier>{861845a3-fdc1-44b2-acda-f49b39d7829f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SettingView">
+      <UniqueIdentifier>{63e126a5-f308-4a48-bc63-331f9fac3ee4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{6ad54d78-d2ff-4368-8161-366a75f6c51e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NotifyView">
+      <UniqueIdentifier>{df74533f-be53-42bb-a1e3-4cea94dd006d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TCP">
+      <UniqueIdentifier>{d9dfa7f9-4b2b-4671-a4a5-0b42283dce29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cjrCurl">
+      <UniqueIdentifier>{2b2a12e4-7244-4675-9ee0-ece31e301ad9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Login\LoginWnd.cpp">
+      <Filter>Login</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpRequst\HttpRequest.cpp">
+      <Filter>HttpRequst</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigFile\ConfigFile.cpp">
+      <Filter>ConfigFile</Filter>
+    </ClCompile>
+    <ClCompile Include="sqlite3\db.cpp">
+      <Filter>Sqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="xml\tinyxml.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="xml\tinystr.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="xml\tinyxmlerror.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="xml\tinyxmlparser.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="MainView\MainView.cpp">
+      <Filter>MainView</Filter>
+    </ClCompile>
+    <ClCompile Include="Video\Video.cpp">
+      <Filter>Video</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingView\SettingView.cpp">
+      <Filter>SettingView</Filter>
+    </ClCompile>
+    <ClCompile Include="Thread\CrossThread.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="NotifyView\NotifyWnd.cpp">
+      <Filter>NotifyView</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP\TCPSocket.cpp">
+      <Filter>TCP</Filter>
+    </ClCompile>
+    <ClCompile Include="CjrCurl\MyCurl.cpp">
+      <Filter>cjrCurl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Login\LoginWnd.h">
+      <Filter>Login</Filter>
+    </ClInclude>
+    <ClInclude Include="expresshead.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HttpRequst\HttpRequest.h">
+      <Filter>HttpRequst</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigFile\ConfigFile.h">
+      <Filter>ConfigFile</Filter>
+    </ClInclude>
+    <ClInclude Include="sqlite3\db.h">
+      <Filter>Sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="xml\tinyxml.h">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="xml\tinystr.h">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="MainView\MainView.h">
+      <Filter>MainView</Filter>
+    </ClInclude>
+    <ClInclude Include="Video\Video.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="Video\LivePlayer.h">
+      <Filter>Video</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingView\SettingView.h">
+      <Filter>SettingView</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread\CrossThread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NotifyView\NotifyWnd.h">
+      <Filter>NotifyView</Filter>
+    </ClInclude>
+    <ClInclude Include="TCP\TCPSocket.h">
+      <Filter>TCP</Filter>
+    </ClInclude>
+    <ClInclude Include="CMyCharConver.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CjrCurl\IMyCurl.h">
+      <Filter>cjrCurl</Filter>
+    </ClInclude>
+    <ClInclude Include="CjrCurl\MyCurl.h">
+      <Filter>cjrCurl</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
