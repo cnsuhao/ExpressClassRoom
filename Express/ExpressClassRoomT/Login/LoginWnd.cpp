@@ -7,7 +7,11 @@
 #include "../xml/tinyxml.h"
 
 #define  TIMER_ID_LOGIN	1000
-
+std::string  login_token;
+std::string  login_ip;
+std::string  login_cgi;
+std::string  admin_user;
+std::string  admin_passwd;
 std::string global_user;
 std::string globale_passwd;
 bool		global_rem=false;
@@ -142,11 +146,19 @@ void LoginWnd::Notify(TNotifyUI& msg)
 			}
 		}	
 	}
-	else if (msg.sType == DUI_MSGTYPE_RETURN)
+	else if (msg.sType == DUI_MSGTYPE_RETURN || msg.sType == DUI_MSGTYPE_KILLFOCUS)
 	{
-		if (msg.pSender->GetName() == _T("user") || msg.pSender->GetName() == _T("passwd"))
+		if (msg.sType == DUI_MSGTYPE_RETURN && (msg.pSender->GetName() == _T("user") || msg.pSender->GetName() == _T("passwd")))
 		{
 			StartLogin();
+		}
+		else if (msg.pSender->GetName() == _T("ip"))
+		{
+			ConfigFile cfg(CLOUD_IP_FILE);
+			cloudIP = msg.pSender->GetText().GetData();
+			cfg.addValue("ip", cloudIP,"local");
+			cfg.save();
+			LoadLocalData();
 		}
 	}
 }
@@ -162,9 +174,9 @@ void LoginWnd::LoadLocalData()
 	// load configure file && load login detail from database
 	CEditUI* IPEdit = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("ip")));
 	ConfigFile cfg(CLOUD_IP_FILE);
-	IPEdit->SetText(cfg.getValue("ip").c_str());
+	IPEdit->SetText(cfg.getValue("ip","local").c_str());
 
-	cloudIP = cfg.getValue("ip");
+	cloudIP = cfg.getValue("ip","local");
 	cgi = cfg.getValue("cgi");
 
 	CEditUI* userNameEdit = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("user")));
@@ -215,6 +227,7 @@ LRESULT LoginWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 LRESULT LoginWnd::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	std::string code, msg;
 	if (wParam == TIMER_ID_LOGIN)
 	{
 		try
@@ -223,7 +236,6 @@ LRESULT LoginWnd::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 			std::string res=HttpRequest::request(requestUrl);
 			TiXmlDocument xml;
 			xml.Parse(res.c_str());
-			std::string code, msg;
 			TiXmlNode *root = xml.RootElement();
 			for (TiXmlNode *i = root->FirstChildElement(); i; i = i->NextSiblingElement())
 			{
@@ -262,8 +274,13 @@ LRESULT LoginWnd::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 			db::Exec(sqlcmd, NULL);
 			db::Close();
 			ConfigFile cfg(CLOUD_IP_FILE);
-			cfg.addValue("ip", m_PaintManager.FindControl(_T("ip"))->GetText().GetData());
+			cfg.addValue("ip", m_PaintManager.FindControl(_T("ip"))->GetText().GetData(),"local");
 			cfg.save();
+			login_token = msg;
+			login_ip = cloudIP;
+			login_cgi = cgi;
+			admin_user = cfg.getValue("username");
+			admin_passwd = cfg.getValue("passwd");
 			this->Close();
 		}
 	}

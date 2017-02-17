@@ -1,8 +1,9 @@
 #include "MainView.h"
 #include "../Video/Video.h"
 #include "../SettingView/SettingView.h"
+#include "../NotifyView/NotifyWnd.h"
 #define  TIME_ID_UPDATE_TIME	1001
-
+#define  TIME_ID_NOTIFY			1002
 MainView::MainView() :lab_date(NULL), lab_time(NULL)
 {
 }
@@ -73,6 +74,7 @@ void MainView::Notify(TNotifyUI& msg)
 			setview->Create(*this, _T("Setting"), UI_WNDSTYLE_DIALOG, WS_EX_WINDOWEDGE);
 			setview->CenterWindow();
 			setview->ShowModal();
+			
 		}
 
 	}
@@ -136,6 +138,13 @@ void MainView::Notify(TNotifyUI& msg)
 			is_play=!is_play;
 		}
 	}
+	else if (msg.sType==_T("online"))
+	{
+		CHorizontalLayoutUI* hor_notify = static_cast<CHorizontalLayoutUI*>(m_PaintManager.FindControl(_T("NotifyLay")));
+		hor_notify->SetVisible(true);
+		PlaySound(_T("mgg.wav"), NULL, SND_ASYNC);
+		SetTimer(*this, TIME_ID_NOTIFY, 400, NULL);
+	}
 }
 
 CControlUI* MainView::CreateControl(LPCTSTR pstrClass)
@@ -163,24 +172,39 @@ LRESULT MainView::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		CVideoUI *video = static_cast<CVideoUI*>(m_PaintManager.FindControl(_T("mainVideo")));
 		video->play("rtmp://192.168.8.237:1935/live/slive");
-		//subVideo[0].video->play("rtmp://192.168.8.236:1935/live/slive");
-		//subVideo[1].video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
-		/*for (int i = 0; i < 6; i++)
-		{
-			subVideo[i].video->MediaPlayer->SetMute(true);
-			subVideo[i].video->MediaPlayer->Load("rtmp://192.168.8.236:1935/live/slive");
-		}*/
+		CLabelUI*lab = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_notify")));
+		m_PaintManager.SendNotify(lab, _T("online"));
 		KillTimer(*this, 1111);
 	}
+	else if (wParam == TIME_ID_NOTIFY)
+	{
+		CLabelUI*lab = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_notify")));
+		LPCTSTR s=lab->GetText().GetData();
+		TCHAR title[200];
+		if (lab->GetText().GetLength() <= 2)
+		{
+			KillTimer(*this, TIME_ID_NOTIFY);
+			CHorizontalLayoutUI* hor_notify = static_cast<CHorizontalLayoutUI*>(m_PaintManager.FindControl(_T("NotifyLay")));
+			hor_notify->SetVisible(false);
+
+		}
+		_tcscpy(title, (s + 2));
+		lab->SetText(title);
+	}
+
 	return 0;
 }
 void MainView::Init()
 {
 	initSubVideo();
+	initClassRoom();
 	lab_date = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_date")));
 	lab_time = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_time")));
 	SetTimer(*this, TIME_ID_UPDATE_TIME, 999, NULL);
 	SetTimer(*this, 1111, 500, NULL);
+	// hide notify
+	CHorizontalLayoutUI* hor_notify = static_cast<CHorizontalLayoutUI*>(m_PaintManager.FindControl(_T("NotifyLay")));
+	hor_notify->SetVisible(false);
 }
 void MainView::DisplayDateTime()
 {
@@ -225,6 +249,26 @@ void MainView::initSubVideo()
 		{
 			subVideo[i].btn_student = NULL;
 		}
+
+	}
+}
+
+void MainView::initClassRoom()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		char ico_name[MAX_PATH];
+		sprintf(ico_name, "school_ico%d", i + 1);
+		classRoom[i].btn_ico = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T(ico_name)));
+		char school_name[MAX_PATH];
+		sprintf(school_name, "lab_school_name%d", i + 1);
+		classRoom[i].lab_ip = static_cast<CLabelUI*>(m_PaintManager.FindControl(school_name));
+		char school_ip[MAX_PATH];
+		sprintf(school_ip,"lab_school_ip%d",i+1);
+		classRoom[i].lab_ip = static_cast<CLabelUI*>(m_PaintManager.FindControl(school_ip));
+		char school_connect[MAX_PATH];
+		sprintf(school_connect, "btn_connect%d", i + 1);
+		classRoom[i].btn_connect = static_cast<CButtonUI*>(m_PaintManager.FindControl(school_connect));
 
 	}
 }

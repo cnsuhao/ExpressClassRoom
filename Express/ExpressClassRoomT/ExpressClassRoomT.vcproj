@@ -320,6 +320,30 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="NotifyView"
+			>
+			<File
+				RelativePath=".\NotifyView\NotifyWnd.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NotifyView\NotifyWnd.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TCP"
+			>
+			<File
+				RelativePath=".\TCP\TCPSocket.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TCP\TCPSocket.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

@@ -84,8 +84,10 @@
     <ClCompile Include="HttpRequst\HttpRequest.cpp" />
     <ClCompile Include="Login\LoginWnd.cpp" />
     <ClCompile Include="MainView\MainView.cpp" />
+    <ClCompile Include="NotifyView\NotifyWnd.cpp" />
     <ClCompile Include="SettingView\SettingView.cpp" />
     <ClCompile Include="sqlite3\db.cpp" />
+    <ClCompile Include="TCP\TCPSocket.cpp" />
     <ClCompile Include="Thread\CrossThread.cpp" />
     <ClCompile Include="Video\Video.cpp" />
     <ClCompile Include="WinMain.cpp" />
@@ -100,8 +102,10 @@
     <ClInclude Include="HttpRequst\HttpRequest.h" />
     <ClInclude Include="Login\LoginWnd.h" />
     <ClInclude Include="MainView\MainView.h" />
+    <ClInclude Include="NotifyView\NotifyWnd.h" />
     <ClInclude Include="SettingView\SettingView.h" />
     <ClInclude Include="sqlite3\db.h" />
+    <ClInclude Include="TCP\TCPSocket.h" />
     <ClInclude Include="Thread\CrossThread.h" />
     <ClInclude Include="Video\LivePlayer.h" />
     <ClInclude Include="Video\Video.h" />

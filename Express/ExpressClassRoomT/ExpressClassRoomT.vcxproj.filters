@@ -36,6 +36,12 @@
     <Filter Include="Thread">
       <UniqueIdentifier>{6ad54d78-d2ff-4368-8161-366a75f6c51e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NotifyView">
+      <UniqueIdentifier>{df74533f-be53-42bb-a1e3-4cea94dd006d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TCP">
+      <UniqueIdentifier>{d9dfa7f9-4b2b-4671-a4a5-0b42283dce29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -77,6 +83,12 @@
     <ClCompile Include="Thread\CrossThread.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
+    <ClCompile Include="NotifyView\NotifyWnd.cpp">
+      <Filter>NotifyView</Filter>
+    </ClCompile>
+    <ClCompile Include="TCP\TCPSocket.cpp">
+      <Filter>TCP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Login\LoginWnd.h">
@@ -114,6 +126,12 @@
     </ClInclude>
     <ClInclude Include="Thread\CrossThread.h">
       <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="NotifyView\NotifyWnd.h">
+      <Filter>NotifyView</Filter>
+    </ClInclude>
+    <ClInclude Include="TCP\TCPSocket.h">
+      <Filter>TCP</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

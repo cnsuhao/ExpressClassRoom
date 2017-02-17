@@ -6,6 +6,8 @@
 #include <tchar.h>
 #include <string>
 #include <iostream>
+#include <mmsystem.h>
+#pragma comment(lib, "WINMM.LIB")
 #include "../Duilib/UIlib.h"
 #ifdef _DEBUG
 #pragma  comment(lib,"../lib/DuiLib_d.lib")
