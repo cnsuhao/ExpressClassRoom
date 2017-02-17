@@ -1,22 +1,14 @@
 #include "Video.h"
 
- unsigned int __stdcall proc(void* param)
+void __cdecl proc(void* param)
 {
 	tmp_thread* th = (tmp_thread*)param;
 	if (th)
 		th->do_work();
-	return 0;
 }
 void tmp_thread::run()
 {
-	unsigned int threadaddr;
-	handle = (HANDLE)_beginthreadex(NULL, 0, proc, this, 0, &threadaddr);
-	if (!handle)
-	{
-		CloseHandle(handle);
-		handle = NULL;
-	}
-
+	_beginthread(proc,NULL,this);
 }
 
 void tmp_thread::setWork(Ido* work)
@@ -167,7 +159,7 @@ bool CVideoUI::play(std::string url)
 {
 	playurl = url;
 	tmp_thread th;
-	th.setWork(this);
+	th.setWork((Ido*)this);
 	if (MediaPlayer)
 	{
 		th.run();
@@ -181,12 +173,7 @@ void CVideoUI::work()
 	if (MediaPlayer)
 	{
 		MediaPlayer->SetMute(true);
-		static CRITICAL_SECTION sec;
-		InitializeCriticalSection(&sec);
-		EnterCriticalSection(&sec);
-		MediaPlayer->Load(playurl);
-		LeaveCriticalSection(&sec);
-		DeleteCriticalSection(&sec);
+		MediaPlayer->Load(playurl);;
 	}		
 }
 void CVideoUI::stop()

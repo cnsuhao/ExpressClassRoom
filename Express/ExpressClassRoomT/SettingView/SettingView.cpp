@@ -101,7 +101,7 @@ void SettingView::Init()
 	remote_edit[5]->SetText(remoteIP[5].c_str());
 
 	CEditUI *edit_name = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_name")));
-	edit_name->SetText(name.c_str());
+	//edit_name->SetText(CDuiCharConver::ANSIToUTF8(name).c_str());
 
 	CLabelUI*lab_local = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_local_IP")));
 	lab_local->SetText(localIP.c_str());

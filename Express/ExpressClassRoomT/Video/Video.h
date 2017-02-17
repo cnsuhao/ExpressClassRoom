@@ -22,7 +22,6 @@ public:
 	void do_work();
 private:
 	Ido *m_work;
-	HANDLE handle;
 };
 
 class CVideoUI;
