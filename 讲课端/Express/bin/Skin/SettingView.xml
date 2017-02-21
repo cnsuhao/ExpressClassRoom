@@ -14,12 +14,11 @@
             <VerticalLayout name="MidLay" bordersize="0" float="false">
                 <HorizontalLayout name="UpSep" bordersize="0" float="false" height="20" />
                 <HorizontalLayout bordersize="0" float="false">
-                    <Label name="lab_ico" bordersize="0" float="false" width="110" height="110" bkimage="default_img.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" />
+                    <Button name="btn_ico" bordersize="0" float="false" width="110" height="110" bkimage="default_img.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" />
                     <VerticalLayout bordersize="0" float="false">
                         <HorizontalLayout bordersize="0" float="false" />
                         <HorizontalLayout bordersize="0" float="false" height="30">
-                            <Label text="本机IP：" bordersize="0" float="false" width="165" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="right" />
-                            <Label name="lab_local_IP" text="127.0.0.1" bordersize="0" float="false" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
+               
                         </HorizontalLayout>
                         <HorizontalLayout bordersize="0" float="false" height="30">
                             <Container bordersize="0" float="false" width="37" height="30" />
@@ -34,33 +33,33 @@
                     <Label text="远程IP地址设置" bordersize="0" float="false" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" />
                 </HorizontalLayout>
                 <HorizontalLayout bordersize="0" float="false" height="30">
-                    <Label text="远程1：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="right" />
+                    <Label text="    远程1：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA"  />
                     <Container bordersize="0" float="false" width="20" />
                     <Edit name="edit_remote1"  borderround="5,5" text="192.168.8.114" bordersize="0" float="false" bkcolor="#FF333333" textpadding="4,3,4,3" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
                     <Container bordersize="0" float="false" width="16" />
-                    <Label text="远程2：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="right" />
+                    <Label text="    远程2：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA"  />
                     <Container bordersize="0" float="false" width="20" />
                     <Edit name="edit_remote2"  borderround="5,5" text="192.168.8.115" bordersize="0" float="false" bkcolor="#FF333333" textpadding="4,3,4,3" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
                 </HorizontalLayout>
                 <HorizontalLayout bordersize="0" float="false" height="5" />
                 <HorizontalLayout bordersize="0" float="false" height="30">
-                    <Label text="远程3：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="right" />
+                    <Label text="    远程3：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA"  />
                     <Container bordersize="0" float="false" width="20" />
                     <Edit name="edit_remote3"  borderround="5,5" text="192.168.8.116" bordersize="0" float="false" bkcolor="#FF333333" textpadding="4,3,4,3" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
                     <Container bordersize="0" float="false" width="16" />
-                    <Label text="远程4：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="right" />
+                    <Label text="    远程4：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA"  />
                     <Container bordersize="0" float="false" width="20" />
                     <Edit name="edit_remote4"  borderround="5,5" text="192.168.8.117" bordersize="0" float="false" bkcolor="#FF333333" textpadding="4,3,4,3" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
                 </HorizontalLayout>
                 <HorizontalLayout bordersize="0" float="false" height="5" />
                 <HorizontalLayout bordersize="0" float="false" height="30">
-                    <Label text="录播IP：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="right" />
+                    <Label text="   录播IP：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA"  />
                     <Container bordersize="0" float="false" width="20" />
                     <Edit name="edit_lubo_IP"  borderround="5,5" text="192.168.1.2" bordersize="0" float="false" bkcolor="#FF333333" textpadding="4,3,4,3" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" />
                 </HorizontalLayout>
                 <HorizontalLayout bordersize="0" float="false" height="5" />
                 <HorizontalLayout bordersize="0" float="false" height="30">
-                    <Label text="云平台IP：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="right" />
+                    <Label text=" 云平台IP：" bordersize="0" float="false" width="60" height="30" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA"  />
                     <Container bordersize="0" float="false" width="20" />
                     <Edit name="edit_cloud_IP"  borderround="5,5" text="192.168.3.5" bordersize="0" float="false" bkcolor="#FF333333" textpadding="4,3,4,3" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" />
                 </HorizontalLayout>

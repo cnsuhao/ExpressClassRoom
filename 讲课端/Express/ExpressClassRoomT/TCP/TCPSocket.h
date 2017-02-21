@@ -8,7 +8,7 @@
 class IListener
 {
 public:
-	virtual void acceptFrom(SOCKET sock,const char* ip,const int port)=0;
+	//virtual void acceptFrom(SOCKET sock,const char* ip,const int port)=0;
 	virtual void Recv(SOCKET sock,const char* ip,const int port,char* data,int dataLength)=0;
 };
 

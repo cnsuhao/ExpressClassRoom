@@ -162,7 +162,7 @@ bool CVideoUI::play(std::string url)
 {
 	if (MediaPlayer)
 	{
-		//MediaPlayer->SetMute(true);
+		MediaPlayer->SetMute(true);
 		MediaPlayer->Load(playurl);;
 		return true;
 	}

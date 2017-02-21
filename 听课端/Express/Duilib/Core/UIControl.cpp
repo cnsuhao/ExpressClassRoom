@@ -155,7 +155,7 @@ LPCTSTR CControlUI::GetBkImage()
 
 void CControlUI::SetBkImage(LPCTSTR pStrImage)
 {
-    if( m_sBkImage == pStrImage ) return;
+	if( m_sBkImage == pStrImage ) return;
 
     m_sBkImage = pStrImage;
     Invalidate();

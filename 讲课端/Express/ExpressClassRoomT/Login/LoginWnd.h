@@ -8,6 +8,7 @@ public:
 	LoginWnd();
 	~LoginWnd();
 public:
+	static std::string getToken(std::string ip);
 	LPCTSTR GetWindowClassName()const;
 	CDuiString GetSkinFile();
 	CDuiString GetSkinFolder();

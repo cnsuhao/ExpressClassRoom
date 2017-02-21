@@ -14,6 +14,7 @@ std::string  admin_user;
 std::string  admin_passwd;
 std::string global_user;
 std::string globale_passwd;
+std::string  dev_name;
 bool		global_rem=false;
 bool		global_auto=false;
 
@@ -42,7 +43,31 @@ LPCTSTR LoginWnd::GetWindowClassName()const
 	return _T("LoginWnd");
 }
 
-
+std::string LoginWnd::getToken(std::string ip)
+{
+	std::string code, msg;
+	std::string requestUrl = "http://" + ip + "/" + login_cgi + "type=login&userName=" + admin_user + "&password=" + admin_passwd;
+	std::string res = HttpRequest::request(requestUrl);
+	TiXmlDocument xml;
+	xml.Parse(res.c_str());
+	TiXmlNode *root = xml.RootElement();
+	for (TiXmlNode *i = root->FirstChildElement(); i; i = i->NextSiblingElement())
+	{
+		if (strcmp(i->Value(), "code") == 0)
+		{
+			code = string(i->FirstChild()->Value());
+		}
+		else if (strcmp(i->Value(), "msg") == 0)
+		{
+			msg = string(i->FirstChild()->Value());
+		}
+	}
+	if (code == "1")
+	{
+		return msg;
+	}
+	return std::string("");
+}
 int callForDB(void* data, int argc, char** argv, char** colname)
 {
 	if (argc == 5)
@@ -179,6 +204,12 @@ void LoginWnd::LoadLocalData()
 	cloudIP = cfg.getValue("ip","local");
 	cgi = cfg.getValue("cgi");
 
+	string ico_path = cfg.getValue("icopath");
+	if (!ico_path.empty())
+	{
+		CLabelUI *lab_ico = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_ico")));
+		lab_ico->SetBkImage(ico_path.c_str());
+	}
 	CEditUI* userNameEdit = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("user")));
 	userNameEdit->SetText(global_user.c_str());
 
@@ -275,12 +306,12 @@ LRESULT LoginWnd::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 			db::Close();
 			ConfigFile cfg(CLOUD_IP_FILE);
 			cfg.addValue("ip", m_PaintManager.FindControl(_T("ip"))->GetText().GetData(),"local");
-			cfg.save();
 			login_token = msg;
 			login_ip = cloudIP;
 			login_cgi = cgi;
 			admin_user = cfg.getValue("username");
 			admin_passwd = cfg.getValue("passwd");
+			cfg.save();
 			this->Close();
 		}
 	}

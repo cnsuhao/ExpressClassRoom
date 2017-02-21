@@ -55,8 +55,8 @@ public:
 	void setScale(enScale eScale = Scale_Full);
 	void setVolume(int volume);
 	void setMute(bool mute=true);
-private:
 	ILivePlayer *MediaPlayer;
+private:
 	CVideoWnd *m_pwindows;
 	std::string playurl;
 public:
