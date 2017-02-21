@@ -21,4 +21,6 @@ private:
 	CEditUI* remote_edit[4];
 	ConfigFile *cfg;
 	CLabelUI* lab_ico;
+	string local_fileName;
+	bool btext_changed;
 };

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <Window size="1060,600" caption="0,0,0,50">
     <Font name="微软雅黑" size="21" bold="false" italic="false" />
-    <Font name="微软雅黑" size="19" bold="false" italic="false" />
+    <Font name="幼圆" size="16" bold="false" italic="false" />
     <Font name="微软雅黑" size="16" bold="false" italic="false" />
     <VerticalLayout name="MainLay" bordersize="0" float="false" width="60" height="30">
         <HorizontalLayout name="TitleLay" bordersize="0" float="false" height="50" bkcolor="#FF383838">
@@ -34,14 +34,14 @@
                         <Container bordersize="0" float="false" />
                     </VerticalLayout>
                 </HorizontalLayout>
-                <HorizontalLayout name="SubVideoLay" bordersize="0" float="false" height="190" bkcolor="#FF929292">
+                <HorizontalLayout name="SubVideoLay" bordersize="0" float="false" height="190" bkcolor="#FF5B5B5B">
                     <Container bordersize="0" float="false" width="5" />
                     <VerticalLayout name="Ver1" bordersize="0" float="false">
                         <HorizontalLayout bordersize="0" float="false" height="10" />
                         <VerticalLayout  borderround="9,9" float="false" bkcolor="#FF212121">
                             <HorizontalLayout bordersize="0" float="false" height="30">
                                 <Container bordersize="0" float="false" width="9" height="30" />
-                                <Label name="lab_title1" text="秀全中学新校区" bordersize="0" float="false" textcolor="#FF9EA4A9" disabledtextcolor="#FFA7A6AA" />
+                                <Label name="lab_title1" text="秀全中学新校区" bordersize="0" float="false" textcolor="#FFA7A9Ab" disabledtextcolor="#FFA7A6AA" />
                                 <Button name="btn_sound1" bordersize="0" float="false" width="30" height="30" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
                             </HorizontalLayout>
                             <HorizontalLayout bordersize="0" float="false">
@@ -188,11 +188,11 @@
                 <VerticalLayout name="CalssRoomListLay" bordersize="0" float="false">
                     <HorizontalLayout name="ListLay1" bordersize="0" float="false">
                         <Container bordersize="0" float="false" width="10" />
-                        <VerticalLayout bordersize="0" float="false">
+                        <VerticalLayout name="vv1" bordersize="0" float="false">
                             <Container bordersize="0" float="false" height="4" />
                             <VerticalLayout bordersize="0" borderround="5,5" float="false" bkcolor="#FF383838">
                                 <HorizontalLayout bordersize="0" float="false" height="45">
-                                    <Button name="school_ico1" bordersize="0"   borderround="45,45" float="false" width="45" height="45" bkimage="ico.jpg" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                                    <ICOImage name="school_ico1" bordersize="0"   float="false" width="45" height="45" bkimage="default_img.png" TranImage="tran.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
                                     <VerticalLayout bordersize="0" float="false">
                                         <Label name="lab_school_name1" text="秀全中学新校区" bordersize="0" float="false" height="23" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
                                         <Label name="lab_school_ip1" text="192.168.8.74" bordersize="0" float="false" height="22" textcolor="#FF9EA4A9" disabledtextcolor="#FFA7A6AA" align="center" />
@@ -214,11 +214,11 @@
                     </HorizontalLayout>
                     <HorizontalLayout name="ListLay2" bordersize="0" float="false">
                         <Container bordersize="0" float="false" width="10" />
-                        <VerticalLayout bordersize="0" float="false">
+                        <VerticalLayout name="vv2" bordersize="0" float="false">
                             <Container bordersize="0" float="false" height="4" />
                             <VerticalLayout bordersize="0"  borderround="5,5" float="false" bkcolor="#FF383838">
                                 <HorizontalLayout bordersize="0" float="false" height="45">
-                                    <Button name="school_ico2" bordersize="1" bordercolor="#FF383838"   borderround="23,23"  float="false" width="45" height="45" bkimage="file='default_img.png' corner='23,23,23,23'" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                                    <ICOImage name="school_ico2" bordersize="1" bordercolor="#FF383838"    float="false" width="45" height="45" bkimage="default_img.png" TranImage="tran.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
                                     <VerticalLayout bordersize="0" float="false">
                                         <Label name="lab_school_name2" text="秀全中学新校区" bordersize="0" float="false" height="23" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
                                         <Label name="lab_school_ip2" text="192.168.8.74" bordersize="0" float="false" height="22" textcolor="#FF9EA4A9" disabledtextcolor="#FFA7A6AA" align="center" />
@@ -240,11 +240,11 @@
                     </HorizontalLayout>
                     <HorizontalLayout name="ListLay3" bordersize="0" float="false">
                         <Container bordersize="0" float="false" width="10" />
-                        <VerticalLayout bordersize="0" float="false">
+                        <VerticalLayout name="vv3" bordersize="0" float="false">
                             <Container bordersize="0" float="false" height="4" />
-                            <VerticalLayout bordersize="0"  borderround="5,5" float="false" bkcolor="#FF383838">
+                            <VerticalLayout bordersize="0"   borderround="5,5" float="false" bkcolor="#FF383838">
                                 <HorizontalLayout bordersize="0" float="false" height="45">
-                                    <Button name="school_ico3" bordersize="0"   borderround="45,45" float="false" width="45" height="45" bkimage="default_img.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                                    <ICOImage name="school_ico3" bordersize="0"  float="false" width="45" height="45" bkimage="default_img.png" TranImage="tran.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
                                     <VerticalLayout bordersize="0" float="false">
                                         <Label name="lab_school_name3" text="秀全中学新校区" bordersize="0" float="false" height="23" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
                                         <Label name="lab_school_ip3" text="192.168.8.74" bordersize="0" float="false" height="22" textcolor="#FF9EA4A9" disabledtextcolor="#FFA7A6AA" align="center" />
@@ -266,11 +266,11 @@
                     </HorizontalLayout>
                     <HorizontalLayout name="ListLay4" bordersize="0" float="false">
                         <Container bordersize="0" float="false" width="10" />
-                        <VerticalLayout bordersize="0" float="false">
+                        <VerticalLayout  name="vv4" bordersize="0" float="false">
                             <Container bordersize="0" float="false" height="4" />
                             <VerticalLayout bordersize="0"  borderround="5,5" float="false" bkcolor="#FF383838">
                                 <HorizontalLayout bordersize="0" float="false" height="45">
-                                    <Button name="school_ico4" bordersize="0"  borderround="45,45" float="false" width="45" height="45" bkimage="default_img.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                                    <ICOImage name="school_ico4" bordersize="0"  float="false" width="45" height="45" bkimage="default_img.png" TranImage="tran.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
                                     <VerticalLayout bordersize="0" float="false">
                                         <Label name="lab_school_name4" text="秀全中学新校区" bordersize="0" float="false" height="23" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
                                         <Label name="lab_school_ip4" text="192.168.8.74" bordersize="0" float="false" height="22" textcolor="#FF9EA4A9" disabledtextcolor="#FFA7A6AA" align="center" />

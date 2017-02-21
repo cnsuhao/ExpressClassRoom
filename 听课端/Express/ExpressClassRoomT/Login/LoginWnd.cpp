@@ -204,6 +204,12 @@ void LoginWnd::LoadLocalData()
 	cloudIP = cfg.getValue("ip","local");
 	cgi = cfg.getValue("cgi");
 
+	string ico_path = cfg.getValue("icopath");
+	if (!ico_path.empty())
+	{
+		CLabelUI *lab_ico = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_ico")));
+		lab_ico->SetBkImage(ico_path.c_str());
+	}
 	CEditUI* userNameEdit = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("user")));
 	userNameEdit->SetText(global_user.c_str());
 

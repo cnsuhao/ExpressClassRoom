@@ -42,6 +42,9 @@
     <Filter Include="TCP">
       <UniqueIdentifier>{d9dfa7f9-4b2b-4671-a4a5-0b42283dce29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Cjr">
+      <UniqueIdentifier>{ebc0170c-7421-4bef-8406-6a83926e7f92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -89,6 +92,9 @@
     <ClCompile Include="TCP\TCPSocket.cpp">
       <Filter>TCP</Filter>
     </ClCompile>
+    <ClCompile Include="CjrCurl\MyCurl.cpp">
+      <Filter>Cjr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Login\LoginWnd.h">
@@ -132,6 +138,15 @@
     </ClInclude>
     <ClInclude Include="TCP\TCPSocket.h">
       <Filter>TCP</Filter>
+    </ClInclude>
+    <ClInclude Include="CMyCharConver.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CjrCurl\IMyCurl.h">
+      <Filter>Cjr</Filter>
+    </ClInclude>
+    <ClInclude Include="CjrCurl\MyCurl.h">
+      <Filter>Cjr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

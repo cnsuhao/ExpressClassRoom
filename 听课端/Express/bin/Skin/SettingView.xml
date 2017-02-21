@@ -14,7 +14,7 @@
             <VerticalLayout name="MidLay" bordersize="0" float="false">
                 <HorizontalLayout name="UpSep" bordersize="0" float="false" height="20" />
                 <HorizontalLayout bordersize="0" float="false" height="110" >
-                    <Label name="lab_ico" bordersize="0" float="false" width="110" height="110" bkimage="default_img.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" />
+                    <Button name="btn_ico" bordersize="0" float="false" width="110" height="110" bkimage="default_img.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" />
                     <VerticalLayout bordersize="0" float="false">
                         <HorizontalLayout bordersize="0" float="false" />
                         <HorizontalLayout bordersize="0" float="false" height="30">

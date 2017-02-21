@@ -17,7 +17,10 @@ initdata_thread(NULL), update_thread(NULL), update_state(0)
 MainView::~MainView()
 {
 	if (client)
+	{
+		client->close();
 		ITCPClient::releaseInstance(client);
+	}
 }
 
 LPCSTR  MainView::GetWindowClassName() const
@@ -61,6 +64,8 @@ void MainView::Recv(SOCKET sock, const char* ip, const int port, char* data, int
 				WaitForSingleObject(update_thread,3000);
 				CloseHandle(update_thread);
 			}
+			update_ip = res["ip"];
+			update_devname = res["name"];
 			update_thread = CreateThread(NULL, 0, updateProc, (void*)this, NULL, 0);
 		}
 		else if (res["type"] == "UpdatePicture")
@@ -71,6 +76,7 @@ void MainView::Recv(SOCKET sock, const char* ip, const int port, char* data, int
 				WaitForSingleObject(update_thread, 3000);
 				CloseHandle(update_thread);
 			}
+			update_ip = res["ip"];
 			update_thread = CreateThread(NULL, 0, updateProc, (void*)this, NULL, 0);
 		}
 		else if (res["type"] == "JoinMeeting")
@@ -82,6 +88,7 @@ void MainView::Recv(SOCKET sock, const char* ip, const int port, char* data, int
 				WaitForSingleObject(initdata_thread, 3000);
 				CloseHandle(initdata_thread);
 			}
+			PostMessageA(WM_USER + 125);
 			initdata_thread = CreateThread(NULL, 0, initProc, (void*)this, NULL, 0);
 		}
 		else if (res["type"] == "QuitMeeting")
@@ -160,7 +167,10 @@ void MainView::Notify(TNotifyUI& msg)
 		}
 		else if (msg.pSender->GetName() == _T("btn_close"))
 		{
-			Close();
+			if (IDOK == TipMsg::ShowMsgWindow(*this, _T("是否退出"), _T("提示")))
+			{
+				Close();
+			}
 		}
 		else if (msg.pSender->GetName() == _T("btn_expend"))
 		{
@@ -195,7 +205,11 @@ void MainView::Notify(TNotifyUI& msg)
 		}
 		else if (msg.pSender->GetName() == _T("btn_request_interact"))
 		{
-			//请求互动
+			//请求互动发言
+			string data = "type=RequestSpeak&ip=" + login_ip;
+			char cdata[100];
+			strcpy(cdata, data.c_str());
+			client->sendData(cdata, strlen(cdata));
 		}
 
 	}
@@ -277,6 +291,12 @@ LRESULT MainView::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		strcpy(cdata, data.c_str());
 		client->sendData(cdata, strlen(cdata));
 	}
+	else if (uMsg == WM_USER + 125)
+	{
+		//加入听课成功
+		CButtonUI* btn_request = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_request_connect")));
+		btn_request->SetText(_T("断开连接"));
+	}
 	else
 		return __super::HandleMessage(uMsg, wParam, lParam);
 }
@@ -293,6 +313,7 @@ LRESULT MainView::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		if (!localUrl.empty())
 		{
 			video->MediaPlayer->Load(localUrl);
+			//video->play(localUrl);
 		}
 		CLabelUI *lab = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_notify")));
 		lab->SetText(_T("您已经登录到听课端"));

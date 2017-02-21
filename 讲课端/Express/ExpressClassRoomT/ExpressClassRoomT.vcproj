@@ -344,6 +344,22 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="CJr"
+			>
+			<File
+				RelativePath=".\CjrCurl\IMyCurl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CjrCurl\MyCurl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CjrCurl\MyCurl.h"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

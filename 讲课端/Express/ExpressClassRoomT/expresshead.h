@@ -2,6 +2,7 @@
 #define __EXPRESS_HEARD__
 
 #include <stdio.h>
+#include <WinSock2.h>
 #include <windows.h>
 #include <tchar.h>
 #include <string>
@@ -19,5 +20,13 @@ using namespace std;
 #endif
 
 
-#define  CLOUD_IP_FILE	"login.conf"
+extern  std::string  login_token;
+extern  std::string  login_ip;
+extern  std::string  login_cgi;
+extern  std::string  admin_user;
+extern  std::string  admin_passwd;
+extern  std::string  dev_name;
+#define  CLOUD_IP_FILE	"express.conf"
 #define  DB_FILE		"user.db"
+#define  WM_UPDATE_DEVNAME	WM_USER+123
+#define  WM_UPDATE_ICO		WM_USER+124

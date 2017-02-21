@@ -97,7 +97,6 @@ private:
 
 	CLabelUI *lab_date, *lab_time,*lab_notice;
 
-	_SmallVideoCtrl subVideo[6];
 
 	_classUnit classRoom[5];
 
@@ -125,6 +124,8 @@ private:
 private:
 	HANDLE initdata_thread;
 	int update_state;
+	std::string update_devname;
+	std::string update_ip;
 	HANDLE update_thread;
 	//初始化数据线程
 	friend DWORD WINAPI initProc(_In_ LPVOID paramer);

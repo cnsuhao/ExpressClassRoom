@@ -1,7 +1,10 @@
 #include "SettingView.h"
+#include "../CjrCurl/IMyCurl.h"
+#include "../Login/LoginWnd.h"
 
-SettingView::SettingView() :cfg(NULL)
+SettingView::SettingView() :cfg(NULL), bnameUpdate(false)
 {
+
 }
 
 
@@ -36,29 +39,55 @@ void SettingView::Notify(TNotifyUI& msg)
 	{
 		if (msg.pSender->GetName() == _T("btn_close"))
 		{
-			this->Close();
+			if (IDOK == TipMsg::ShowMsgWindow(*this, _T("确定要保存吗？"), _T("提示")))
+			{
+				SaveModify();
+				Close();
+			}
 		}
 		else if (msg.pSender->GetName() == _T("btn_upload"))
 		{
-			OPENFILENAME ofn;
-			nchar strFile[MAX_PATH];
-
+			if (!local_fileName.empty())
+			{
+				ICjrCurl *curl = ICjrCurl::GetInstance();
+				string upload_url = "http://" + login_ip + "/upload.cgi?type=uploadpicture&token=" + LoginWnd::getToken(login_ip);
+				curl->Upload(upload_url,local_fileName,"");
+				::PostMessageA(::GetParent(*this), WM_UPDATE_ICO, NULL, NULL);
+			}
+		}
+		else if (msg.pSender->GetName() == _T("btn_ico"))
+		{
+			OPENFILENAMEA ofn;
+			char strFile[MAX_PATH];
 			memset(&ofn, 0, sizeof(OPENFILENAME));
 			memset(strFile, 0, sizeof(char)*MAX_PATH);
+			ofn.hwndOwner = *this;
 			ofn.lStructSize = sizeof(OPENFILENAME);
-			bofn.lpstrFilter = "网页(*.html)\0*.html*;*.htm*\0";
+			ofn.lpstrFilter = "图片(*.png;*.bmp;*.jpg)\0*.ipg*;*.bmp;*.png\0jpg(*.jpg)\0png(*.png)\0bmp(*.bmp)\0\0";
 			ofn.lpstrFile = strFile;
 			ofn.nMaxFile = MAX_PATH;
 			ofn.Flags = OFN_FILEMUSTEXIST;
-			if (GetOpenFileName(&stFile))   //strFile得到用户所选择文件的路径和文件名 ; 
+			char sbuffer[MAX_PATH];
+			GetCurrentDirectoryA(MAX_PATH, sbuffer);
+			if (GetOpenFileNameA(&ofn))
 			{
-				PathStripPath(strFile);    //strFile得到文件名
+				SetCurrentDirectoryA(sbuffer);
+				CreateDirectoryA(login_ip.c_str(), NULL);
+				msg.pSender->SetBkImage(strFile);
+				local_fileName = string(strFile);
+				char fname[MAX_PATH];
+				strcpy(fname, strFile);
+				PathStripPath(fname);
+				string path = login_ip +"/"+ string(fname);
+				cfg->addValue("icopath", path);
+				cfg->save();
+				CopyFileA(strFile, path.c_str(), FALSE);
 			}
 		}
 	}
 	else if (msg.sType == DUI_MSGTYPE_RETURN || msg.sType == DUI_MSGTYPE_KILLFOCUS)
 	{
-		if (msg.pSender->GetName() == _T("edit_remote1"))
+		/*if (msg.pSender->GetName() == _T("edit_remote1"))
 		{
 			cfg->addValue("ip1", msg.pSender->GetText().GetData(),"remote");
 		}
@@ -81,6 +110,13 @@ void SettingView::Notify(TNotifyUI& msg)
 		else if (msg.pSender->GetName() == _T("edit_cloud_IP"))
 		{
 			cfg->addValue("cloudip", msg.pSender->GetText().GetData(), "remote");
+		}*/
+	}
+	else if (msg.sType == DUI_MSGTYPE_TEXTCHANGED)
+	{
+		if (msg.pSender->GetName() == _T("edit_name"))
+		{
+			bnameUpdate = true;
 		}
 	}
 
@@ -99,6 +135,13 @@ void SettingView::Init()
 	localIP = cfg->getValue("localip", "local");
 	name = cfg->getValue("name", "local");
 
+	string path = cfg->getValue("icopath");
+	if (!path.empty())
+	{
+		CButtonUI* btn_ico = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_ico")));
+		btn_ico->SetBkImage(path.c_str());
+	}
+
 	for (int i = 0; i < 4; i++)
 	{
 		char ctrl_name[200];
@@ -116,6 +159,30 @@ void SettingView::Init()
 	CEditUI *edit_name = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_name")));
 	//edit_name->SetText(CDuiCharConver::ANSIToUTF8(name).c_str());
 
-	CLabelUI*lab_local = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_local_IP")));
-	lab_local->SetText(localIP.c_str());
+}
+
+void SettingView::SaveModify()
+{
+	CEditUI* edit_ip1 = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_remote1")));
+	CEditUI* edit_ip2 = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_remote2")));
+	CEditUI* edit_ip3 = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_remote3")));
+	CEditUI* edit_ip4 = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_remote4")));
+	CEditUI* edit_lubo = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_lubo_IP")));
+	CEditUI* edit_cloud = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_cloud_IP")));
+	CEditUI *edit_name = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_name")));
+	if (bnameUpdate)
+	{
+		cfg->addValue("name", edit_name->GetText().GetData());
+		::PostMessageA(::GetParent(*this), WM_UPDATE_DEVNAME, NULL, NULL);
+		dev_name = cfg->getValue("name");
+		bnameUpdate = false;
+	}
+
+	cfg->addValue("ip1", edit_ip1->GetText().GetData(), "remote");
+	cfg->addValue("ip2", edit_ip2->GetText().GetData(), "remote");
+	cfg->addValue("ip3", edit_ip3->GetText().GetData(), "remote");
+	cfg->addValue("ip4", edit_ip4->GetText().GetData(), "remote");
+	cfg->addValue("cloudip", edit_cloud->GetText().GetData(), "remote");
+	cfg->addValue("luboip",edit_lubo->GetText().GetData(),"remote");
+	cfg->save();
 }

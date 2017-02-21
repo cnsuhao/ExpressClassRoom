@@ -40,7 +40,7 @@
             </VerticalLayout>
             <VerticalLayout name="Tab2" bordersize="0" float="false" bkcolor="#FFFFFFFF">
                 <HorizontalLayout bordersize="0" float="false">
-                    <Button bordersize="1"  normalimage="default_img.png"float="true" pos="168,39,0,0" width="110" height="110" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                    <Label bordersize="1" name="lab_ico" bkimage="default_img.png"float="true" pos="168,39,0,0" width="110" height="110" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
                 </HorizontalLayout>
                 <HorizontalLayout bordersize="0" float="false" height="60">
                     <Button name="btn_cancel" text="取消" bordersize="1" borderround="5,5" float="true" pos="123,10,0,0" width="200" height="40" bkcolor="#FF383838" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="1" align="center" />
