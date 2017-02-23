@@ -68,12 +68,29 @@ LRESULT NotifyWnd::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 LRESULT NotifyWnd::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	if (uMsg == WM_TIMER)
+	{
+		if (wParam == ID_TIME_TIMEOUT)
+		{
+			KillTimer(*this, ID_TIME_TIMEOUT);
+			Close(IDOK);
+		}
+	}
 	return 0;
 }
 
 int TipMsg::ShowMsgWindow(HWND parentHwnd, std::string msg, std::string title)
 {
-	NotifyWnd* pwnd = new NotifyWnd(msg,title);
+	NotifyWnd* pwnd = new NotifyWnd(msg, title);
+	pwnd->Create(parentHwnd, _T("Tip"), UI_WNDSTYLE_DIALOG, WS_EX_WINDOWEDGE);
+	pwnd->CenterWindow();
+	return pwnd->ShowModal();
+}
+
+int TipMsg::ShowMsgWindowTime(HWND parentHwnd, unsigned int utime, std::string msg, std::string title)
+{
+	NotifyWnd* pwnd = new NotifyWnd(msg, title);
+	SetTimer(*pwnd, ID_TIME_TIMEOUT, utime, NULL);
 	pwnd->Create(parentHwnd, _T("Tip"), UI_WNDSTYLE_DIALOG, WS_EX_WINDOWEDGE);
 	pwnd->CenterWindow();
 	return pwnd->ShowModal();

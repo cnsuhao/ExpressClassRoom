@@ -178,7 +178,8 @@
                 <VerticalLayout name="statusLay" bordersize="0" float="false" width="190" height="93">
                     <Label name="lab_sep2" bordersize="0" float="false" height="1" bkcolor="#FF666666" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" />
                     <Label name="lab_class_status" bordersize="0" float="true" pos="21,6,0,0" width="148" height="29" bkimage="remote_off.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" />
-                    <Label name="lab_date" text="2016-10-10" bordersize="0" float="true" pos="21,36,0,0" width="148" height="29" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="0" align="center" />
+                    <Label name="lab_class_status_on" visible="false" bordersize="0" float="true" pos="21,6,0,0" width="148" height="29" bkimage="remote_on.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" />
+					<Label name="lab_date" text="2016-10-10" bordersize="0" float="true" pos="21,36,0,0" width="148" height="29" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="0" align="center" />
                     <Label name="lab_time" text="16:33:55" bordersize="0" float="true" pos="21,65,0,0" width="148" height="29" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="0" align="center" />
                 </VerticalLayout>
             </VerticalLayout>

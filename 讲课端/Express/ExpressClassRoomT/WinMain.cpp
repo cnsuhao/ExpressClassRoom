@@ -1,3 +1,4 @@
+#include "resource.h"
 #include "expresshead.h"
 #include "MainView/MainView.h"
 #include "login/LoginWnd.h"
@@ -32,12 +33,14 @@ int  _tWinMain(HINSTANCE hInstance,
 
 	LoginWnd *login = new LoginWnd();
 	login->Create(NULL, _T("µÇÂ¼"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+	login->SetIcon(IDI_ICON1);
 	login->CenterWindow();
 	UINT lres=login->ShowModal();
 	if (lres == 1)
 	{
 		MainView *mainview = new MainView();
 		mainview->Create(NULL, _T("mainPage"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+		mainview->SetIcon(IDI_ICON1);
 		mainview->CenterWindow();
 		mainview->ShowModal();
 	}

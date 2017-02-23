@@ -55,6 +55,7 @@ public:
 	void setScale(enScale eScale = Scale_Full);
 	void setVolume(int volume);
 	void setMute(bool mute=true);
+	void flushBk();
 	ILivePlayer *MediaPlayer;
 private:
 	CVideoWnd *m_pwindows;

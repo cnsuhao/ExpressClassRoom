@@ -42,8 +42,8 @@ void SettingView::Notify(TNotifyUI& msg)
 			if (IDOK == TipMsg::ShowMsgWindow(*this, _T("确定要保存吗？"), _T("提示")))
 			{
 				SaveModify();
-				Close();
 			}
+			Close();
 		}
 		else if (msg.pSender->GetName() == _T("btn_upload"))
 		{
@@ -135,6 +135,8 @@ void SettingView::Init()
 	localIP = cfg->getValue("localip", "local");
 	name = cfg->getValue("name", "local");
 
+	CEditUI* edit_name = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_name")));
+	edit_name->SetText(name.c_str());
 	string path = cfg->getValue("icopath");
 	if (!path.empty())
 	{
@@ -155,9 +157,6 @@ void SettingView::Init()
 	remote_edit[4]->SetText(remoteIP[4].c_str());
 	remote_edit[5] = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_cloud_IP")));
 	remote_edit[5]->SetText(remoteIP[5].c_str());
-
-	CEditUI *edit_name = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_name")));
-	//edit_name->SetText(CDuiCharConver::ANSIToUTF8(name).c_str());
 
 }
 

@@ -5,6 +5,9 @@
 #include "../Login/LoginWnd.h"
 #include "../MainView/MainView.h"
 #include "../CjrCurl/IMyCurl.h"
+#include "../NotifyView/NotifyWnd.h"
+#include "../CMyCharConver.h"
+
 SettingView::SettingView() :cfg(NULL), lab_ico(NULL),
 btext_changed(false)
 {
@@ -49,6 +52,10 @@ void SettingView::Notify(TNotifyUI& msg)
 	{
 		if (msg.pSender->GetName() == _T("btn_close"))
 		{
+			if (IDOK == TipMsg::ShowMsgWindow(*this, _T("确定关闭？"), _T("提示")))
+			{
+				SaveModify();
+			}
 			this->Close();
 		}
 		else if (msg.pSender->GetName() == _T("btn_upload"))
@@ -106,7 +113,7 @@ void SettingView::Notify(TNotifyUI& msg)
 	}
 	else if (msg.sType == DUI_MSGTYPE_TEXTCHANGED)
 	{
-		if (msg.pSender->GetName() == _T("btext_changed"))
+		if (msg.pSender->GetName() == _T("edit_name"))
 		{
 			btext_changed = true;
 		}
@@ -151,14 +158,35 @@ void SettingView::OnUpload()
 	{
 		ICjrCurl* icurl = ICjrCurl::GetInstance();
 		icurl->Upload("http://"+login_ip+"/upload.cgi?type=uploadpicture&token=" + LoginWnd::getToken(login_ip), local_fileName, "");
-		::PostMessageA(::GetParent(*this), WM_USER + 124, NULL, NULL);
+		::PostMessageA(::GetParent(*this), WM_UPDATE_ICO, NULL, NULL);
 	}
 	
 }
+
+void SettingView::SaveModify()
+{
+	CEditUI* edit_class_IP = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_class_IP")));
+	CEditUI* edit_lubo = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_lubo_IP")));
+	CEditUI* edit_cloud = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_cloud_IP")));
+	CEditUI *edit_name = static_cast<CEditUI*>(m_PaintManager.FindControl(_T("edit_name")));
+	if (btext_changed)
+	{
+		cfg->addValue("name", edit_name->GetText().GetData(),"local");
+		dev_name = cfg->getValue("name","local");
+		OnUpdate_name(dev_name);
+		btext_changed = false;
+	}
+
+	cfg->addValue("classip", edit_class_IP->GetText().GetData(), "remote");
+	cfg->addValue("cloudip", edit_cloud->GetText().GetData(), "remote");
+	cfg->addValue("luboip", edit_lubo->GetText().GetData(), "remote");
+	cfg->save();
+}
+
 void  SettingView::OnUpdate_name(std::string new_name)
 {
 	std::string  code, msg;
-	std::string requestUrl = "http://" +login_ip + "/" + login_cgi + "type=setdevname&name=" + new_name + "&token=" + login_token;
+	std::string requestUrl = "http://" +login_ip + "/" + login_cgi + "type=setdevname&name=" + CMyCharConver::ANSIToUTF8(new_name) + "&token=" + login_token;
 	std::string res=HttpRequest::request(requestUrl);
 	TiXmlDocument xml;
 	xml.Parse(res.c_str());
@@ -176,9 +204,9 @@ void  SettingView::OnUpdate_name(std::string new_name)
 	}
 	if (code != "1")
 	{
-		std::string requestUrl = "http://" + login_ip + "/" + login_cgi + "type=setdevname&name=" + new_name + "&token=" + LoginWnd::getToken(login_ip);
+		std::string requestUrl = "http://" + login_ip + "/" + login_cgi + "type=setdevname&name=" + CMyCharConver::ANSIToUTF8(new_name) + "&token=" + LoginWnd::getToken(login_ip);
 		HttpRequest::request(requestUrl);
 	}
 	//发送TCP消息[更新了设备名]
-	::PostMessageA(::GetParent(*this),WM_USER+123,NULL,NULL);
+	::PostMessageA(::GetParent(*this),WM_UPDATE_DEVNAME,NULL,NULL);
 }

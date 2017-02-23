@@ -24,6 +24,7 @@ switch_view_thread(NULL), current_view(-1), current_index(-1), client(NULL)
 		client->open(login_ip.c_str(), 4507);
 		client->setListener(this);
 	}
+	local_thread = CreateThread(NULL, 0, initLocalUrl, this, NULL, NULL);
 }
 MainView::~MainView()
 {
@@ -84,6 +85,9 @@ void MainView::Recv(SOCKET sock, const char* ip, const int port, char* data, int
 		}
 		else if (res["type"] == "UpdatePicture")
 		{
+			if (class_list.find(res["ip"]) == class_list.end())
+				return;
+			just_update_pic = res["ip"];
 			if (!updatePicture_thread)
 			{
 				updatePicture_thread = CreateThread(NULL, 0, updatePicture_Proc, this, NULL, NULL);
@@ -102,7 +106,24 @@ void MainView::Recv(SOCKET sock, const char* ip, const int port, char* data, int
 		else if (res["type"] == "QuitMeeting")
 		{
 			//收到听课端退出的消息
-			delete_classUI(class_list[res["ip"]], class_list.size());
+			if(class_list.find(res["ip"])!=class_list.end())
+			{
+				delete_classUI(class_list[res["ip"]], class_list.size());
+				TipMsg::ShowMsgWindowTime(*this, 1000,class_list[res["ip"]].dev_name+"退出听课" ,"提示");
+				class_list[res["ip"]].class_video.video->stop();
+				class_list[res["ip"]].class_video.video->flushBk();
+				class_list.erase(class_list.find(res["ip"]));
+
+			}
+			if (class_list.size() == 0)
+			{
+				CLabelUI* lab_ico = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_class_status")));
+				lab_ico->SetVisible(true);
+
+				CLabelUI* lab_icoon = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_class_status_on")));
+				lab_icoon->SetVisible(false);
+			}
+
 		}
 		else if (res["type"] == "SelChat")
 		{
@@ -124,7 +145,8 @@ void MainView::Recv(SOCKET sock, const char* ip, const int port, char* data, int
 		}
 		else if (res["type"] == "RequestSpeak")
 		{
-			
+			just_speak_ip = res["ip"];
+			::PostMessageA(*this, WM_SELECT_SPEAK, NULL, NULL);
 		}
 	}
 }
@@ -172,6 +194,37 @@ DWORD WINAPI updateJoin_Proc(_In_ LPVOID paramer)
 				p->class_list[p->just_join].dev_name = CMyCharConver::UTF8ToANSI(mmsg);
 			}
 		}
+		//获取播放地址
+		{
+			string rcode, rmsg, rtmp_url;
+			string rurl = "http://" + p->just_join + "/" + login_cgi + "type=queryurl&name=sublurl&token=" + token;
+			string rres = HttpRequest::request(rurl);
+			TiXmlDocument xmlrr;
+			xmlrr.Parse(rres.c_str());
+			TiXmlNode *rootr = xmlrr.RootElement();
+			for (TiXmlNode *ir = rootr->FirstChildElement(); ir; ir = ir->NextSiblingElement())
+			{
+				if (strcmp(ir->Value(), "code") == 0)
+				{
+					rcode = string(ir->FirstChild()->Value());
+				}
+				else if (strcmp(ir->Value(), "msg") == 0)
+				{
+					if (ir->FirstChild())
+						rmsg = string(ir->FirstChild()->Value());
+				}
+				else if (rmsg == "successed" && strcmp(ir->Value(), "data") == 0)
+				{
+					ir = ir->FirstChildElement()->FirstChildElement();
+					rtmp_url = string(ir->FirstChild()->Value());
+				}
+			}
+			if (!rtmp_url.empty())
+			{
+				p->class_list[p->just_join].play_url = rtmp_url.replace(7, 9, p->just_join);
+				//p->class_list[p->just_join].class_video.video->MediaPlayer->Load(p->class_list[p->just_join].play_url);
+			}
+		}
 
 		//获取头像
 		requestUrl = "http://" + p->just_join + "/" + login_cgi + "type=getpicture&token=" + token;
@@ -198,31 +251,6 @@ DWORD WINAPI updateJoin_Proc(_In_ LPVOID paramer)
 			cjrcurl->Download("http://" + p->just_join + "/" + p->class_list[p->just_join].picture_path, p->just_join + "/" + p->class_list[p->just_join].picture_path, "");
 
 		}
-		//获取播放地址
-		string rcode, rmsg, rtmp_url;
-		string rurl = "http://" + p->just_join + "/" + login_cgi + "type=queryurl&name=sublurl&token=" + token;
-		string rres = HttpRequest::request(rurl);
-		TiXmlDocument xmlr;
-		xmlr.Parse(pres.c_str());
-		TiXmlNode *rootr = xmlr.RootElement();
-		for (TiXmlNode *ir = root->FirstChildElement(); ir; ir = ir->NextSiblingElement())
-		{
-			if (strcmp(ir->Value(), "code") == 0)
-			{
-				rcode = string(ir->FirstChild()->Value());
-			}
-			else if (strcmp(ir->Value(), "msg") == 0)
-			{
-				rmsg = string(ir->FirstChild()->Value());
-			}
-			else if (rmsg == "successed" && strcmp(ir->Value(), "data") == 0)
-			{
-				ir = ir->FirstChildElement()->FirstChildElement();
-				rtmp_url = string(ir->FirstChild()->Value());
-			}
-		}
-		p->class_list[p->just_join].play_url = rtmp_url.replace(7, 9, login_ip);
-
 	}
 	//控件关联
 	p->class_list[p->just_join].class_ctrl.btn_connect = p->classRoom[p->class_list.size() - 1].btn_connect;
@@ -231,12 +259,12 @@ DWORD WINAPI updateJoin_Proc(_In_ LPVOID paramer)
 	p->class_list[p->just_join].class_ctrl.lab_title = p->classRoom[p->class_list.size() - 1].lab_title;
 	p->class_list[p->just_join].class_ctrl.lay = p->classRoom[p->class_list.size() - 1].lay;
 
+	p->class_list[p->just_join].class_video.btn_sound_off = p->subVideo[p->class_list.size() - 1].btn_sound_off;
 	p->class_list[p->just_join].class_video.btn_sound = p->subVideo[p->class_list.size() - 1].btn_sound;
 	p->class_list[p->just_join].class_video.btn_student = p->subVideo[p->class_list.size() - 1].btn_student;
 	p->class_list[p->just_join].class_video.btn_teacher = p->subVideo[p->class_list.size() - 1].btn_teacher;
 	p->class_list[p->just_join].class_video.lab_title = p->subVideo[p->class_list.size() - 1].lab_title;
 	p->class_list[p->just_join].class_video.video = p->subVideo[p->class_list.size() - 1].video;
-
 	p->PostMessageA(WM_CLIENT_ADDED, 0, 0);
 
 	return 0;
@@ -244,6 +272,34 @@ DWORD WINAPI updateJoin_Proc(_In_ LPVOID paramer)
 DWORD WINAPI updatePicture_Proc(_In_ LPVOID paramer)
 {
 	MainView *p = (MainView*)paramer;
+
+	string icocode, pmsg;
+	string requestUrl = "http://" + p->just_update_pic + "/" + login_cgi + "type=getpicture&token=" + LoginWnd::getToken(p->just_update_pic);
+	string pres = HttpRequest::request(requestUrl);
+	TiXmlDocument xmlp;
+	xmlp.Parse(pres.c_str());
+	TiXmlNode *rootp = xmlp.RootElement();
+	for (TiXmlNode *i = rootp->FirstChildElement(); i; i = i->NextSiblingElement())
+	{
+		if (strcmp(i->Value(), "code") == 0)
+		{
+			icocode = string(i->FirstChild()->Value());
+		}
+		else if (strcmp(i->Value(), "msg") == 0 && icocode == "1")
+		{
+			pmsg = string(i->FirstChild()->Value());
+			p->class_list[p->just_update_pic].picture_path = CMyCharConver::UTF8ToANSI(pmsg);
+		}
+	}
+	//download picture
+	if (!p->class_list[p->just_update_pic].picture_path.empty())
+	{
+		ICjrCurl *cjrcurl = ICjrCurl::GetInstance();
+		cjrcurl->Download("http://" + p->just_update_pic + "/" + p->class_list[p->just_update_pic].picture_path, p->just_update_pic + "/" + p->class_list[p->just_update_pic].picture_path, "");
+		p->class_list[p->just_update_pic].class_ctrl.btn_ico->SetBkImage((p->just_update_pic + p->class_list[p->just_update_pic].picture_path).c_str());
+		p->class_list[p->just_update_pic].class_ctrl.btn_ico->Invalidate();
+
+	}
 	return 0;
 }
 DWORD WINAPI LiveViewSwitch(_In_ LPVOID paramer)
@@ -289,6 +345,98 @@ DWORD WINAPI LiveViewSwitch(_In_ LPVOID paramer)
 	//	}
 	//}
 	return 0;
+}
+
+DWORD WINAPI initLocalUrl(_In_ LPVOID paramer)
+{
+	MainView* p = (MainView*)paramer;
+	
+	//获取本地播放地址
+	string rcode, rmsg, rtmp_url;
+	string rurl = "http://" + login_ip + "/" + login_cgi + "type=queryurl&name=sublurl&token=" + login_token;
+	string rres = HttpRequest::request(rurl);
+	TiXmlDocument xmlrr;
+	xmlrr.Parse(rres.c_str());
+	TiXmlNode *rootr = xmlrr.RootElement();
+	for (TiXmlNode *ir = rootr->FirstChildElement(); ir; ir = ir->NextSiblingElement())
+	{
+		if (strcmp(ir->Value(), "code") == 0)
+		{
+			rcode = string(ir->FirstChild()->Value());
+		}
+		else if (strcmp(ir->Value(), "msg") == 0)
+		{
+			if (ir->FirstChild())
+				rmsg = string(ir->FirstChild()->Value());
+		}
+		else if (rmsg == "successed" && strcmp(ir->Value(), "data") == 0)
+		{
+			ir = ir->FirstChildElement()->FirstChildElement();
+			rtmp_url = string(ir->FirstChild()->Value());
+		}
+	}
+	if (!rtmp_url.empty())
+		p->local_url = rtmp_url.replace(7, 9, login_ip);
+	//获取本地导播流
+	string dcode, dmsg, durl;
+	string d_request_url = "http://" + login_ip + "/" + login_cgi + "type=queryurl&name=durl&token=" + login_token;
+	string d_res = HttpRequest::request(d_request_url);
+	TiXmlDocument d_xml;
+	d_xml.Parse(d_res.c_str());
+	TiXmlNode *vga_root = d_xml.RootElement();
+	for (TiXmlNode *ir = vga_root->FirstChildElement(); ir; ir = ir->NextSiblingElement())
+	{
+		if (strcmp(ir->Value(), "code") == 0)
+		{
+			dcode = string(ir->FirstChild()->Value());
+		}
+		else if (strcmp(ir->Value(), "msg") == 0)
+		{
+			if (ir->FirstChild())
+				dmsg = string(ir->FirstChild()->Value());
+		}
+		else if (dmsg == "successed" && strcmp(ir->Value(), "data") == 0)
+		{
+			ir = ir->FirstChildElement()->FirstChildElement();
+			durl = string(ir->FirstChild()->Value());
+		}
+	}
+	if (!durl.empty())
+		p->local_durl = durl.replace(7, 9, login_ip);
+	//获取VGA流
+	string vgacode, vgamsg, vga_url;
+	string vga_request_url = "http://" + login_ip + "/" + login_cgi + "type=queryurl&name=vgaurl&token=" + login_token;
+	string vga_res = HttpRequest::request(vga_request_url);
+	TiXmlDocument vag_xml;
+	vag_xml.Parse(vga_res.c_str());
+	TiXmlNode *d_root = vag_xml.RootElement();
+	for (TiXmlNode *ir = d_root->FirstChildElement(); ir; ir = ir->NextSiblingElement())
+	{
+		if (strcmp(ir->Value(), "code") == 0)
+		{
+			vgacode = string(ir->FirstChild()->Value());
+		}
+		else if (strcmp(ir->Value(), "msg") == 0)
+		{
+			if (ir->FirstChild())
+				vgamsg = string(ir->FirstChild()->Value());
+		}
+		else if (vgamsg == "successed" && strcmp(ir->Value(), "data") == 0)
+		{
+			ir = ir->FirstChildElement()->FirstChildElement();
+			vga_url = string(ir->FirstChild()->Value());
+		}
+	}
+	if (!vga_url.empty())
+		p->vga_url = vga_url.replace(7, 9, login_ip);
+	Sleep(300);
+	CVideoUI *video = static_cast<CVideoUI*>(p->m_PaintManager.FindControl(_T("mainVideo")));
+		video->MediaPlayer->Load(p->local_url);
+		p->subVideo[4].video->MediaPlayer->Load(p->local_durl);
+		p->subVideo[4].lab_title->SetText(_T("本地"));
+		p->subVideo[5].video->MediaPlayer->Load(p->vga_url);
+		p->subVideo[5].lab_title->SetText(_T("PPT"));
+return 0;
 }
 
 void MainView::Notify(TNotifyUI& msg)
@@ -344,6 +492,8 @@ void MainView::Notify(TNotifyUI& msg)
 			setview->ShowModal();			
 		}
 		
+		
+		//点击老师时切换到view1
 		char teacher_name[30];
 		for (int i = 1; i <= 5; i++)
 		{
@@ -355,6 +505,7 @@ void MainView::Notify(TNotifyUI& msg)
 				break;
 			}
 		}
+		//点击学生时
 		char student_name[30];
 		for (int i = 1; i <= 5; i++)
 		{
@@ -367,10 +518,12 @@ void MainView::Notify(TNotifyUI& msg)
 			}
 		}
 
+
+
 	}
 	if (msg.sType == DUI_MSGTYPE_DBCLICK)
 	{
-	/*	if (msg.pSender->GetName() == _T("mainVideo"))
+		if (msg.pSender->GetName() == _T("mainVideo"))
 		{
 			CHorizontalLayoutUI* hor = static_cast<CHorizontalLayoutUI*>(m_PaintManager.FindControl(_T("SubVideoLay")));
 			hor->SetVisible(!hor->IsVisible());
@@ -382,6 +535,7 @@ void MainView::Notify(TNotifyUI& msg)
 				video->SetVisible(hor->IsVisible());
 			}	
 		}
+		/*
 		else if (msg.pSender->GetName() == _T("video1"))
 		{
 			static bool is_play = false;
@@ -439,6 +593,8 @@ void MainView::Notify(TNotifyUI& msg)
 
 void MainView::delete_classUI(_classinfo info, int current_mount)
 {
+	if(current_mount==0)
+		return;
 	CDuiString ver_name = info.class_ctrl.lay->GetName();
 	int index = -1;
 	if (_tcscmp(ver_name, _T("vv1")))
@@ -486,18 +642,33 @@ CControlUI* MainView::CreateControl(LPCTSTR pstrClass)
 }
 LRESULT MainView::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	/*if (uMsg == WM_TIMER)
+	if (uMsg == WM_TIMER)
 		return OnTimer(uMsg, wParam, lParam);
-	else*/ if (uMsg == WM_CLIENT_ADDED)
+	else if (uMsg == WM_CLIENT_ADDED)
 	{
 		if (IDOK == TipMsg::ShowMsgWindow(*this, (class_list[just_join].dev_name+"申请加入听课").c_str(), _T("提示")))
 		{
 			class_list[just_join].class_ctrl.lay->SetVisible(true);
+			class_list[just_join].class_ctrl.btn_ico->SetBkImage((just_join+"/"+class_list[just_join].picture_path).c_str());
+			class_list[just_join].class_ctrl.lab_ip->SetText(just_join.c_str());
+			class_list[just_join].class_ctrl.lab_title->SetText(class_list[just_join].dev_name.c_str());
+			class_list[just_join].class_video.lab_title->SetText(class_list[just_join].dev_name.c_str());
+			class_list[just_join].class_video.video->MediaPlayer->Load(class_list[just_join].play_url);
 			lab_notice->SetText((class_list[just_join].dev_name+"上线啦").c_str());
 			m_PaintManager.SendNotify(lab_notice, _T("online"));
+			string ss = "type=JoinMeeting&ip=" + just_join + "&name=" + class_list[just_join].dev_name;
+			char data[50];
+			strcpy(data, ss.c_str());
+			client->sendData(data, strlen(data));
+
+			CLabelUI* lab_ico = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_class_status")));
+			lab_ico->SetVisible(false);
+
+			CLabelUI* lab_icoon = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_class_status_on")));
+			lab_icoon->SetVisible(true);
 		}
 	}
-	else if (WM_UPDATE_DEVNAME)
+	else if (uMsg==WM_UPDATE_DEVNAME)
 	{
 		string s = "type=UpdateDevName&ip="+login_ip+"&name="+dev_name;
 		char data[50];
@@ -510,7 +681,32 @@ LRESULT MainView::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		client->sendData(data,strlen(data));
 	}
-	else if (WM_UPDATE_ICO)
+	else if (uMsg == WM_SELECT_SPEAK)
+	{
+		if (class_list.find(just_speak_ip) != class_list.end())
+		{
+			if (IDOK == TipMsg::ShowMsgWindowTime(*this, 5000, class_list[just_speak_ip].dev_name + "请求进行互动", "提示"))
+			{
+				//选择当前发言
+				class_list[just_speak_ip].class_video.btn_sound_off->SetVisible(true);
+				class_list[just_speak_ip].class_video.btn_sound->SetVisible(false);
+				for (map<string, _classinfo>::iterator itor = class_list.begin(); itor != class_list.end(); itor++)
+				{
+					if (itor->first != just_speak_ip)
+					{
+						itor->second.class_video.btn_sound_off->SetVisible(false);
+						itor->second.class_video.btn_sound->SetInternVisible(true);
+					}
+				}
+				string ss = "type=SelChat&ip=" + just_speak_ip;
+				char data[50];
+				strcpy(data,ss.c_str());
+				client->sendData(data,strlen(data));
+				//选择当前播音
+			}
+		}
+	}
+	else if (uMsg == WM_UPDATE_ICO)
 	{
 		string s = "type=UpdatePicture&ip=" + login_ip;
 		char data[50];
@@ -535,9 +731,8 @@ LRESULT MainView::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 	else if (wParam == 1111)
 	{
-		CVideoUI *video = static_cast<CVideoUI*>(m_PaintManager.FindControl(_T("mainVideo")));
-		//video->play("rtmp://192.168.8.237:1935/live/slive");
 		CLabelUI*lab = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_notify")));
+		lab->SetText(_T("欢迎使用课堂助手讲课端"));
 		m_PaintManager.SendNotify(lab, _T("online"));
 		KillTimer(*this, 1111);
 	}
@@ -597,9 +792,15 @@ void MainView::initSubVideo()
 		char title_name[20];
 		sprintf(title_name,"lab_title%d",i+1);
 		subVideo[i].lab_title = static_cast<CLabelUI*>(m_PaintManager.FindControl(title_name));
+
 		char snd_name[20];
 		sprintf(snd_name, "btn_sound%d", i + 1);
 		subVideo[i].btn_sound = static_cast<CButtonUI*>(m_PaintManager.FindControl(snd_name));
+
+		char sndoff_name[20];
+		sprintf(sndoff_name, "btn_soundoff%d", i + 1);
+		subVideo[i].btn_sound_off = static_cast<CButtonUI*>(m_PaintManager.FindControl(sndoff_name));
+
 		char video_name[20];
 		sprintf(video_name, "video%d", i + 1);
 		subVideo[i].video = static_cast<CVideoUI*>(m_PaintManager.FindControl(video_name));
@@ -626,10 +827,10 @@ void MainView::initClassRoom()
 	{
 		char ico_name[MAX_PATH];
 		sprintf(ico_name, "school_ico%d", i + 1);
-		classRoom[i].btn_ico = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T(ico_name)));
+		classRoom[i].btn_ico = static_cast<CICOControlUI*>(m_PaintManager.FindControl(_T(ico_name)));
 		char school_name[MAX_PATH];
 		sprintf(school_name, "lab_school_name%d", i + 1);
-		classRoom[i].lab_ip = static_cast<CLabelUI*>(m_PaintManager.FindControl(school_name));
+		classRoom[i].lab_title = static_cast<CLabelUI*>(m_PaintManager.FindControl(school_name));
 		char school_ip[MAX_PATH];
 		sprintf(school_ip,"lab_school_ip%d",i+1);
 		classRoom[i].lab_ip = static_cast<CLabelUI*>(m_PaintManager.FindControl(school_ip));
@@ -639,7 +840,7 @@ void MainView::initClassRoom()
 		char ver_name[MAX_PATH];
 		sprintf(ver_name, "vv%d", i + 1);
 		classRoom[i].lay = static_cast<CVerticalLayoutUI*>(m_PaintManager.FindControl(ver_name));
-		//classRoom[i].lay->SetVisible(false);
+		classRoom[i].lay->SetVisible(false);
 
 	}
 }

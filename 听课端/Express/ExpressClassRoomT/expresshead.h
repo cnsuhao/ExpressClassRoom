@@ -26,3 +26,6 @@ extern  std::string  admin_user;
 extern  std::string  admin_passwd;
 #define  CLOUD_IP_FILE	"express.conf"
 #define  DB_FILE		"user.db"
+#define  WM_UPDATE_DEVNAME	WM_USER+123
+#define  WM_UPDATE_ICO		WM_USER+124
+#define  WM_ADDED_SUCCESS	WM_USER+125

@@ -196,3 +196,12 @@ void CVideoUI::setMute(bool mute)
 	if (MediaPlayer)
 		MediaPlayer->SetMute(mute);
 }
+
+void CVideoUI::flushBk()
+{
+	if (m_pwindows)
+	{
+		::ShowWindow(*m_pwindows, SW_SHOW);
+		m_pwindows->PainBk();
+	}
+}
