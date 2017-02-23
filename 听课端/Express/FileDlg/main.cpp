@@ -92,12 +92,56 @@ map<std::string,std::string> paraseCommand(const char* cmd)
 	return res_map;
 }
 
+static wstring ANSIToUnicode(const string str)
+{
+	int  len = 0;
+	len = str.length();
+	int  unicodeLen = ::MultiByteToWideChar(CP_ACP,
+		0,
+		str.c_str(),
+		-1,
+		NULL,
+		0);
+	wchar_t *  pUnicode;
+	pUnicode = new  wchar_t[unicodeLen + 1];
+	memset(pUnicode, 0, (unicodeLen + 1)*sizeof(wchar_t));
+	::MultiByteToWideChar(CP_ACP,
+		0,
+		str.c_str(),
+		-1,
+		(LPWSTR)pUnicode,
+		unicodeLen);
+	wstring  rt;
+	rt = (wchar_t*)pUnicode;
+	delete  pUnicode;
+
+	return  rt;
+};
+
+wstring FromAnsiToUnicode(const string AnsiStr)
+{
+	int length = AnsiStr.length();
+	int unicodeLen = ::MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, AnsiStr.c_str(), -1, NULL, 0);
+	wchar_t *punicode;
+	punicode = new wchar_t[unicodeLen + 1];
+	memset(punicode, 0, (unicodeLen + 1)*sizeof(wchar_t));
+	::MultiByteToWideChar(CP_ACP, 0, AnsiStr.c_str(), -1, (LPWSTR)punicode, unicodeLen);
+	wstring unicodeStr;
+	unicodeStr = (wchar_t*)punicode;
+	delete[] punicode;
+	return unicodeStr;
+}
+
+
 
 int main()
 {
 	
-	map<std::string, std::string> res_map = paraseCommand("a=b&c=&d=E&f");
 
+	string a = "ÄãºÃ°¡";
+	cout << a << endl;
+	std::locale l = wcout.getloc();
+	wcout << FromAnsiToUnicode(a) << endl;
 	getchar();
 	return EXIT_SUCCESS;
 }

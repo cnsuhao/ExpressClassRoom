@@ -88,6 +88,14 @@ void MainView::Recv(SOCKET sock, const char* ip, const int port, char* data, int
 				WaitForSingleObject(initdata_thread, 3000);
 				CloseHandle(initdata_thread);
 			}
+			if(!ip_table.empty())
+			{
+				
+				CLabelUI* lab_ico = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_class_status")));
+				lab_ico->SetVisible(false);
+				CLabelUI* lab_icoon = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_class_status_on")));
+				lab_icoon->SetVisible(true);
+			}
 			PostMessageA(WM_USER + 125);
 			initdata_thread = CreateThread(NULL, 0, initProc, (void*)this, NULL, 0);
 		}
@@ -101,6 +109,14 @@ void MainView::Recv(SOCKET sock, const char* ip, const int port, char* data, int
 					ip_table.erase(ip_table.begin() + i);
 					break;
 				}
+			}
+			if(ip_table.empty())
+			{
+				
+				CLabelUI* lab_ico = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_class_status")));
+				lab_ico->SetVisible(true);
+				CLabelUI* lab_icoon = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_class_status_on")));
+				lab_icoon->SetVisible(false);
 			}
 			if (initdata_thread)
 			{
@@ -169,6 +185,11 @@ void MainView::Notify(TNotifyUI& msg)
 		{
 			if (IDOK == TipMsg::ShowMsgWindow(*this, _T("是否退出"), _T("提示")))
 			{
+				string str = "type=QuitMeeting&ip=" + login_ip;
+				char data[50];
+				strcpy(data, str.c_str());
+				client->sendData(data,strlen(data));
+				Sleep(500);
 				Close();
 			}
 		}
@@ -195,13 +216,23 @@ void MainView::Notify(TNotifyUI& msg)
 			setview->CenterWindow();
 			setview->ShowModal();			
 		}
-		else if(msg.pSender->GetName()==_T("btn_request_connect"))
+		else if(msg.pSender->GetName()==_T("btn_request_connect") &&msg.pSender->GetText()==_T("请求连接"))
 		{
 			//请求连接
 			string data = "type=RequestJoin&ip="+login_ip;
 			char cdata[100];
 			strcpy(cdata, data.c_str());
 			client->sendData(cdata, strlen(cdata));
+		}
+		else if (msg.pSender->GetName() == _T("btn_request_connect") && msg.pSender->GetText() == _T("断开连接"))
+		{
+			//断开连接
+			string data = "type=QuitMeeting&ip=" + login_ip;
+			char cdata[100];
+			strcpy(cdata, data.c_str());
+			// <modify play stream url>
+			client->sendData(cdata, strlen(cdata));
+			msg.pSender->SetText(_T("请求连接"));
 		}
 		else if (msg.pSender->GetName() == _T("btn_request_interact"))
 		{
@@ -228,7 +259,7 @@ void MainView::Notify(TNotifyUI& msg)
 		int named = 2;
 		for (map<string, remote_class_info>::iterator it = class_room_list.begin(); it != class_room_list.end(); it++)
 		{
-			if (it->first != class_ip)
+			if (it->first != class_ip && named<=5)
 			{
 				char ver_name[20];
 				sprintf(ver_name, "ver%d", named);
@@ -274,7 +305,7 @@ LRESULT MainView::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	if (uMsg == WM_TIMER)
 		return OnTimer(uMsg, wParam, lParam);
-	else if (uMsg == WM_USER + 123)
+	else if (uMsg == WM_UPDATE_DEVNAME)
 	{
 		//更新设备名称
 		ConfigFile c(CLOUD_IP_FILE);
@@ -283,7 +314,7 @@ LRESULT MainView::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		strcpy(cdata, data.c_str());
 		client->sendData(cdata,strlen(cdata));
 	}
-	else if (uMsg == WM_USER + 124)
+	else if (uMsg == WM_UPDATE_ICO)
 	{
 		//更新头像消息
 		string data = "type=UpdatePicture&ip=" + login_ip;
@@ -291,10 +322,12 @@ LRESULT MainView::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		strcpy(cdata, data.c_str());
 		client->sendData(cdata, strlen(cdata));
 	}
-	else if (uMsg == WM_USER + 125)
+	else if (uMsg == WM_ADDED_SUCCESS)
 	{
 		//加入听课成功
 		CButtonUI* btn_request = static_cast<CButtonUI*>(m_PaintManager.FindControl(_T("btn_request_connect")));
+		CLabelUI* lab_state = static_cast<CLabelUI*>(m_PaintManager.FindControl(_T("lab_class_status")));
+		lab_state->SetBkImage(_T("remote_off.png"));
 		btn_request->SetText(_T("断开连接"));
 	}
 	else
@@ -508,8 +541,8 @@ DWORD WINAPI initProc(_In_ LPVOID paramer)
 
 			}
 		}
-		p->m_PaintManager.SendNotify(p->lab_notice, _T("initclassroom"));
 	}
+	p->m_PaintManager.SendNotify(p->lab_notice, _T("initclassroom"));
 	return 0;
 }
 

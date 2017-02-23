@@ -15,6 +15,7 @@ private:
 	void Notify(TNotifyUI& msg);
 	void Init();
 	void OnUpload();
+	void SaveModify();
 	void OnUpdate_name(std::string new_name);
 	std::string remote_info[4];
 	// [0]name [1]havaclass [2]lobo [3]cloud
@@ -22,5 +23,6 @@ private:
 	ConfigFile *cfg;
 	CLabelUI* lab_ico;
 	string local_fileName;
+	std::string dev_name;
 	bool btext_changed;
 };

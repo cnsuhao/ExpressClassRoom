@@ -10,6 +10,7 @@ struct _SmallVideoCtrl
 {
 	CLabelUI*	lab_title;
 	CButtonUI*	btn_sound;
+	CButtonUI*  btn_sound_off;
 	CVideoUI*	video;
 	union 
 	{
@@ -19,23 +20,7 @@ struct _SmallVideoCtrl
 	CButtonUI* btn_student;
 };
 
-struct _classUnit
-{
-	CButtonUI* btn_ico;
-	CLabelUI* lab_title;
-	CLabelUI* lab_ip;
-	CButtonUI* btn_connect;
-	CVerticalLayoutUI *lay;
-};
 
-struct _classinfo
-{
-	std::string dev_name;//设备名
-	std::string play_url;//播放地址(标清流)
-	std::string picture_path;//头像路径
-	_classUnit  class_ctrl;//容纳的控件
-	_SmallVideoCtrl class_video;
-};
 
 class CICOControlUI : public CLabelUI
 {
@@ -68,6 +53,25 @@ private:
 	CDuiString m_stranImage;
 
 };
+
+struct _classUnit
+{
+	CICOControlUI* btn_ico;
+	CLabelUI* lab_title;
+	CLabelUI* lab_ip;
+	CButtonUI* btn_connect;
+	CVerticalLayoutUI *lay;
+};
+
+struct _classinfo
+{
+	std::string dev_name;//设备名
+	std::string play_url;//播放地址(标清流)
+	std::string picture_path;//头像路径
+	_classUnit  class_ctrl;//容纳的控件
+	_SmallVideoCtrl class_video;
+};
+
 class MainView :public WindowImplBase, public IListener
 {
 public:
@@ -108,6 +112,8 @@ private:
 	void add_classUI(_classinfo info);
 private:
 	std::string just_join;//刚刚加入的IP
+	std::string just_update_pic;
+	std::string just_speak_ip;//选择发言的IP
 	std::map<std::string, _classinfo>class_list;
 	//更新听课成员加入线程
 	HANDLE updateMenberJoin_thread;
@@ -115,13 +121,19 @@ private:
 	HANDLE updatePicture_thread;
 	//切换流线程
 	HANDLE switch_view_thread;
+	//讲课端的播放地址
+	HANDLE local_thread;
 	friend DWORD WINAPI updateJoin_Proc(_In_ LPVOID paramer);
 	friend DWORD WINAPI updatePicture_Proc(_In_ LPVOID paramer);
 	friend DWORD WINAPI LiveViewSwitch(_In_ LPVOID paramer);
+	friend DWORD WINAPI initLocalUrl(_In_ LPVOID paramer);
 private:
 	//学生-老师 画面切换
 	int current_index;
 	int current_view;
+	std::string local_url;
+	std::string local_durl;
+	std::string vga_url;
 	void cut_view(int index, int view);
 
 };

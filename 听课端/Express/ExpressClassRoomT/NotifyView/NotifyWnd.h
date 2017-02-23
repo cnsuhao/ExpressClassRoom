@@ -1,11 +1,12 @@
 #pragma once
 #include "../expresshead.h"
 
+#define ID_TIME_TIMEOUT	1314
 
 class NotifyWnd :public WindowImplBase
 {
 public:
-	NotifyWnd(std::string msg,std::string title);
+	NotifyWnd(std::string msg, std::string title);
 	~NotifyWnd();
 public:
 	LPCTSTR GetWindowClassName()const;
@@ -23,5 +24,6 @@ protected:
 class TipMsg
 {
 public:
-	static int ShowMsgWindow(HWND parentHwnd,std::string msg="提示信息",std::string title="提示");
+	static int ShowMsgWindow(HWND parentHwnd, std::string msg = "提示信息", std::string title = "提示");
+	static int ShowMsgWindowTime(HWND parentHwnd, unsigned int utime = 1000, std::string msg = "提示信息", std::string title = "提示");
 };

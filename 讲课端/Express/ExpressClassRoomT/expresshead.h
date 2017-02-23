@@ -30,3 +30,5 @@ extern  std::string  dev_name;
 #define  DB_FILE		"user.db"
 #define  WM_UPDATE_DEVNAME	WM_USER+123
 #define  WM_UPDATE_ICO		WM_USER+124
+
+#define  WM_SELECT_SPEAK	WM_USER+200
